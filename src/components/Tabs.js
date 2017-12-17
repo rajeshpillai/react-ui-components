@@ -32,18 +32,24 @@ export default class Tabs extends React.Component {
   }
 
   renderTabs() {
-    const { data } = this.props
+    const { data, disabled } = this.props
     const { activeIndex } = this.state
-
+   
     return data.map((tab, index) => {
       const isActive = index === activeIndex
+      const isDisabled = disabled.includes(index)
       const style = isActive ? styles.activeTab : styles.tab
       return (
         <div
           key={tab.id}
-          className="Tab"
+          className= {isDisabled
+            ? 'tab disabled' 
+            : isActive
+                ? 'tab active'
+                : 'tab'  
+          }
           style={style}
-          onClick={() => this.selectTabIndex(index)}
+          onClick={isDisabled ? null : () => this.selectTabIndex(index)}
         > {tab.label}</div>
       )
     });
