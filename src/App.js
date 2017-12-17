@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from "react-dom"
 import Tabs from './components/Tabs';
 import {NewTabs, Tab, TabList, TabPanels, TabPanel} from './components/NewTabs/index';
+import {DataTabs} from './components/DataTabs/index';
 
 export default class App extends React.Component {
   render() {
@@ -29,6 +30,9 @@ export default class App extends React.Component {
           </TabPanels>
         </NewTabs>
 
+        <hr/>
+        <h2>Data Tabs </h2>
+        <DataTabs data={this.props.countries} />
       </div>
     )
   }
