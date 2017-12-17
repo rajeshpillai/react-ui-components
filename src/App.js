@@ -7,7 +7,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Countries</h1>
+        <h2>Old Tabs</h2>
         <Tabs data={this.props.countries}  
             tabsOnBottom={true}
             disabled={[1]}
@@ -15,10 +15,11 @@ export default class App extends React.Component {
 
         <hr/>
 
+        <h2>New Tabs</h2>
         <NewTabs>
           <TabList>
             <Tab>Tab 1</Tab>
-            <Tab>Tab 2</Tab>
+            <Tab isDisabled>Disabled Tab 2</Tab>
             <Tab>Tab 3</Tab>
           </TabList>
           <TabPanels>
