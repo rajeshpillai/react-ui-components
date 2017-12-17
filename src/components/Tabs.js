@@ -22,7 +22,7 @@ styles.panel = {
   padding: 10
 }
 
-export default class Tabs extends React.Component {
+export default class Tabs extends Component {
   state = {
     activeIndex: 0
   }
