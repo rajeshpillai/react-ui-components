@@ -21,9 +21,9 @@ export default class App extends React.Component {
             <Tab>Tab 2</Tab>
             <Tab>Tab 3</Tab>
           </TabList>
-          <TabPanels>
+          <TabPanels activeIndex={0}>
             <TabPanel>Content 1</TabPanel>
-            <TabPanel>Content 3</TabPanel>
+            <TabPanel>Content 2</TabPanel>
             <TabPanel>Content 3</TabPanel>
           </TabPanels>
         </NewTabs>

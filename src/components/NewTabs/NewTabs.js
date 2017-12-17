@@ -22,8 +22,20 @@ styles.panel = {
 }
 
 export default class NewTabs extends Component {
+  state = {
+    activeIndex: 0
+  }
+
+  selectTabIndex(activeIndex) {
+    this.setState({ activeIndex })
+  }
+  
   render() {
-    return this.props.children;
+    return (
+    <div className="Tabs">
+      {this.props.children}
+    </div>
+    )
   }
 }
 
