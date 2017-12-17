@@ -26,14 +26,20 @@ export default class NewTabs extends Component {
     activeIndex: 0
   }
 
-  selectTabIndex(activeIndex) {
+  selectTabIndex = (activeIndex) => {
     this.setState({ activeIndex })
   }
-  
+
   render() {
+    const children = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        activeIndex: this.state.activeIndex,
+        onSelectTab: this.selectTabIndex
+      });
+    })
     return (
     <div className="Tabs">
-      {this.props.children}
+      {children}
     </div>
     )
   }

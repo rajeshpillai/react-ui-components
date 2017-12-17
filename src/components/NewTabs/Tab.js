@@ -21,8 +21,8 @@ styles.activeTab = {
 export default class Tab extends Component {
 
   render() {
-    const isActive = false;
-    const isDisabled = false;
+    const isActive = this.props.isActive;
+    const isDisabled = this.props.isDisabled;
     const style = isActive ? styles.activeTab : styles.tab;
     return (
       <div
@@ -33,7 +33,7 @@ export default class Tab extends Component {
               : 'tab'  
         }
         style={style}
-        onClick={isDisabled ? null : () => this.selectTabIndex()}
+        onClick={isDisabled ? null : () => {this.props.onSelect()}}
       > {this.props.children}</div>
     )
   }
