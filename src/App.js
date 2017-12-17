@@ -6,7 +6,7 @@ export default class App extends React.Component {
     return (
       <div>
         <h1>Countries</h1>
-        <Tabs data={this.props.countries} />
+        <Tabs data={this.props.countries}  tabsOnBottom={true}/>
       </div>
     )
   }

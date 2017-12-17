@@ -56,14 +56,22 @@ export default class Tabs extends React.Component {
   }
 
   render() {
-    return (
-      <div className="Tabs">
-        <div>
+    const {tabsOnBottom} = this.props;
+
+    const tabs = (
+        <div className="tabs">
             {this.renderTabs()}
         </div>
-        <div  style={styles.panel}>
+    );
+    const panels = (
+        <div className="panels"  style={styles.panel}>
           {this.renderPanel()}
         </div>
+    );
+
+    return (
+      <div className="Tabs">
+        {tabsOnBottom ? [panels, tabs] : [tabs, panels]}
       </div>
     )
   }
