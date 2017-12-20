@@ -43,15 +43,9 @@ export default class NewTabs extends Component {
   }
 
   render() {
-    const children = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
-        activeIndex: this.state.activeIndex,
-        onSelectTab: this.selectTabIndex
-      });
-    })
     return (
     <div className="Tabs">
-      {children}
+      {this.props.children}
     </div>
     )
   }
