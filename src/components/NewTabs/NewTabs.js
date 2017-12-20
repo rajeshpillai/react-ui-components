@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom"
+import * as PropTypes from 'prop-types';
 
 const styles = {}
 
@@ -26,6 +27,17 @@ export default class NewTabs extends Component {
     activeIndex: 0
   }
 
+  static childContextTypes =  {
+   activeIndex: PropTypes.number.isRequired,
+   onSelectTab: PropTypes.func.isRequired
+  }
+
+  getChildContext() {
+    return {
+      activeIndex: this.state.activeIndex,
+      onSelectTab: this.selectTabIndex
+    }
+  }
   selectTabIndex = (activeIndex) => {
     this.setState({ activeIndex })
   }

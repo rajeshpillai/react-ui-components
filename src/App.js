@@ -18,16 +18,20 @@ export default class App extends React.Component {
 
         <h2>New Tabs</h2>
         <NewTabs>
-          <TabList>
-            <Tab>Tab 1</Tab>
-            <Tab isDisabled>Disabled Tab 2</Tab>
-            <Tab>Tab 3</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>Content 1</TabPanel>
-            <TabPanel>Content 2</TabPanel>
-            <TabPanel>Content 3</TabPanel>
-          </TabPanels>
+          <div>
+            <TabList>
+              <Tab>Tab 1</Tab>
+              <Tab isDisabled>Disabled Tab 2</Tab>
+              <Tab>Tab 3</Tab>
+            </TabList>
+          </div>
+          <div>
+            <TabPanels>
+              <TabPanel>Content 1</TabPanel>
+              <TabPanel>Content 2</TabPanel>
+              <TabPanel>Content 3</TabPanel>
+            </TabPanels>
+          </div>
         </NewTabs>
 
         <hr/>

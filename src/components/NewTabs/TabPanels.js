@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
+import * as PropTypes from 'prop-types';
 
 const styles = {}
 
@@ -14,8 +15,11 @@ styles.panel = {
 }
 
 export default class TabPanels extends Component {
-    render() {
-      const activeIndex = this.props.activeIndex;
+  static contextTypes = {
+    activeIndex: PropTypes.number.isRequired
+  }
+  render() {
+      const activeIndex = this.context.activeIndex;
       return (
         <div className="panels"  style={styles.panel}>
           {this.props.children[activeIndex]}
