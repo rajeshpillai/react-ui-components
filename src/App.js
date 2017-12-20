@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import Tabs from './components/Tabs';
 import {NewTabs, Tab, TabList, TabPanels, TabPanel} from './components/NewTabs/index';
 import {DataTabs} from './components/DataTabs/index';
+import Greeting from './components/HOC/Greeting';
 
 export default class App extends React.Component {
   render() {
@@ -37,6 +38,10 @@ export default class App extends React.Component {
         <hr/>
         <h2>Data Tabs </h2>
         <DataTabs data={this.props.countries} />
+
+        <hr/>
+        <h2>HOC </h2>
+        <Greeting />
       </div>
     )
   }
