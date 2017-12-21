@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
-import SpecialGreeting from './SpecialGreeting';
+import specialGreeting from './SpecialGreeting';
 
 class Greeting extends Component {
     render() {
@@ -12,4 +12,4 @@ class Greeting extends Component {
     }
 }
 
-export default SpecialGreeting(Greeting);
+export default specialGreeting(Greeting);

@@ -5,6 +5,7 @@ import {NewTabs, Tab, TabList, TabPanels, TabPanel} from './components/NewTabs/i
 import {DataTabs} from './components/DataTabs/index';
 import Greeting from './components/HOC/Greeting';
 
+
 export default class App extends React.Component {
   render() {
     return (

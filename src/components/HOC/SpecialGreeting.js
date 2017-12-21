@@ -5,8 +5,8 @@ import ReactDOM from "react-dom";
 var newData = {
     data: 'Special greeting from HOC'
 }
-var SpecialGreeting = WrappedComponent => class extends React.Component {
-    componentDidMount() {
+var specialGreeting = WrappedComponent => class extends React.Component {
+    omponentDidMount() {
         this.setState({
             data: newData.data
         })
@@ -14,9 +14,12 @@ var SpecialGreeting = WrappedComponent => class extends React.Component {
 
     render() {
         return (
-            <WrappedComponent {...this.props} {...this.state} />
+            <div>
+            <h2>Special Greeting</h2>
+             <WrappedComponent {...this.props} {...this.state} />
+            </div>
         )
     }
 }
 
-export default SpecialGreeting;
+export default specialGreeting;
