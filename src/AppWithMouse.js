@@ -5,7 +5,7 @@ import {NewTabs, Tab, TabList, TabPanels, TabPanel} from './components/NewTabs/i
 import {DataTabs} from './components/DataTabs/index';
 import Greeting from './components/HOC/Greeting';
 import withMouse from './components/HOC/withMouse';
-
+import withCat from './components/HOC/withCat';
  class App extends React.Component {
   render() {
     const {x, y} = this.props.mouse;
@@ -52,5 +52,5 @@ import withMouse from './components/HOC/withMouse';
   }
 }
 
-export default withMouse(App);
+export default withMouse(withCat(App));
 
