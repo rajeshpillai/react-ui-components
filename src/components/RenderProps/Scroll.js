@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 
 
-export default class Mouse extends Component {
+export default class Scroll extends Component {
     state = {x: 0, y: 0}
 
     handleMouseMove = (event) => {
@@ -14,8 +14,8 @@ export default class Mouse extends Component {
 
     render (){
         return (
-            <div {...this.props} onMouseMove={this.handleMouseMove}>
-                {this.props.children(this.state)}
+            <div onMouseMove={this.handleMouseMove}>
+                {this.props.render(this.state.y)}
             </div>
         )
     }
