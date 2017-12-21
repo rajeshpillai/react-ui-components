@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import AppWithMouse from './AppWithMouse';
 import registerServiceWorker from './registerServiceWorker';
 
 const DATA = [
@@ -20,5 +21,5 @@ const DATA = [
 
 console.log(DATA);
 
-ReactDOM.render(<App countries={DATA} />, document.getElementById('root'));
+ReactDOM.render(<AppWithMouse countries={DATA} />, document.getElementById('root'));
 registerServiceWorker();
