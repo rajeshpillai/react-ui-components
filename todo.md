@@ -9,5 +9,9 @@
 
 NOTE:
 
-HOC can have name collision problem
+HOC can have name collision problem and they compose statically.
+
+Render props compose dynamically.
+
+
 
