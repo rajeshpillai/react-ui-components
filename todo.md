@@ -4,6 +4,8 @@
 -  Refactor (look how messy jquery ui e.g. datepicker has become)
 -  Data Tab
 -  Context (Allow custom markup to have no impact)
+-  HOC name collission issues
+-  Render Props
 
 NOTE:
 
