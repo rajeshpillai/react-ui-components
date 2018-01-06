@@ -3,13 +3,19 @@ import ReactDOM from "react-dom"
 import Tabs from './components/Tabs';
 import {NewTabs, Tab, TabList, TabPanels, TabPanel} from './components/NewTabs/index';
 import {DataTabs} from './components/DataTabs/index';
-import Greeting from './components/HOC/Greeting';
-
+import Photo from './components/Photo';
+import withBorder from './components/HOC/withBorder';
+import withDashedBorder from './components/HOC/withDashedBorder';
+import withMouse from './components/HOC/withMouse';
 
 export default class App extends React.Component {
   render() {
+
+    var PhotoBorder = withBorder(Photo);
     return (
       <div>
+        <PhotoBorder/>
+
         <h2>Old Tabs</h2>
         <Tabs data={this.props.countries}  
             tabsOnBottom={true}
@@ -39,10 +45,6 @@ export default class App extends React.Component {
         <hr/>
         <h2>Data Tabs </h2>
         <DataTabs data={this.props.countries} />
-
-        <hr/>
-        <h2>HOC </h2>
-        <Greeting />
       </div>
     )
   }
