@@ -51,6 +51,7 @@ export default class AppDragDropDemo extends React.Component {
     this.state.boxes.forEach((b) => {
         boxes[b.category].push(
           <div key={b.name} draggable className="draggable"
+                style={{backgroundColor: b.name}}
             onDragStart={(e) => this.onDragStart(e, b.name)}
             >
           </div>
@@ -61,7 +62,8 @@ export default class AppDragDropDemo extends React.Component {
     return (
       <div>
         <h2>Drag Drop Demo</h2>
-        <div>
+        <div className="wip" onDrop={(e) =>{this.onDrop(e, "wip")}}
+            onDragOver={(e)=>this.onDragover(e)}>
            {boxes.wip}
         </div>
 
