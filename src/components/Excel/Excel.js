@@ -12,6 +12,7 @@ export default class extends React.Component {
         sortby: null,
         descending: false,
         edit: null, // {row: index, cell: index}
+        search: false
     }
 
     _sort=(e) => {
@@ -58,7 +59,37 @@ export default class extends React.Component {
 
     }
 
-    render() {
+    _toggleSearch = () => {
+        this.setState({
+            search: !this.state.search
+        })
+    }
+
+    _renderSearch = () => {
+        if (!this.state.search) {
+            return null;
+        }
+        return (
+            <tr>
+                {this.state.headers.map((_ignore, idx) => {
+                    return (<td key={idx}>
+                            <input type="text" data-idx={idx} />
+                        </td>
+                    );
+                })}
+            </tr>
+        );
+    }
+
+    _renderToolbar = () =>{
+        return (
+            <button 
+                onClick={this._toggleSearch}
+                className="toolbar">search</button>
+        );
+    }
+
+    _renderTable = () => {
         var {headers,data} = this.state;
         var headerView = headers.map((header, index) => {
             if (this.state.sortby === index) {
@@ -94,9 +125,19 @@ export default class extends React.Component {
                     </tr>
                 </thead>
                 <tbody onDoubleClick={this._showEditor}>
+                    {this._renderSearch()}
                     {contentView}
                 </tbody>
             </table>
         );
+    }
+
+    render() {
+        return (
+            <div>
+             {this._renderToolbar()}
+             {this._renderTable()}
+            </div>
+        )
     }
 }
