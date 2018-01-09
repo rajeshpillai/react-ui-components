@@ -40,6 +40,24 @@ export default class extends React.Component {
         });
     }
 
+    _save = (e) => {
+        e.preventDefault();
+        var input = e.target.firstChild;
+
+        // Clone the data
+        var data = this.state.data.slice();
+
+        // Update the data
+        data[this.state.edit.row][this.state.edit.cell] = input.value;
+
+        // Update state
+        this.setState({
+            edit: null, // done editing
+            data: data
+        });
+
+    }
+
     render() {
         var {headers,data} = this.state;
         var headerView = headers.map((header, index) => {
@@ -59,7 +77,7 @@ export default class extends React.Component {
                 {row.map((col, idx) => {
                     let content = col;
                     if (edit && edit.row === rowIdx && edit.cell===idx) {
-                        content = <form>
+                        content = <form onSubmit={this._save}>
                             <input type="text" defaultValue={content} />
                         </form>
                     }
