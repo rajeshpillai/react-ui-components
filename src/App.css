@@ -1,10 +1,6 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  width: 95%;
+  margin: 5px auto;
 }
 
 .App-header {
@@ -52,4 +48,19 @@
   background-color: orange;
 }
 
+.toolbar {
 
+}
+.toolbar > a {
+  padding: 2px;
+  font-size: 0.7em;
+}
+
+.data-table {
+  border-collapse: collapse;
+}
+
+.data-table th {
+  background-color: cornflowerblue;
+
+}

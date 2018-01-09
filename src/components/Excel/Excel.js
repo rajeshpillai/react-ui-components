@@ -161,8 +161,7 @@ export default class extends React.Component {
         return (
             <div className="toolbar">
                 <button 
-                    onClick={this._toggleSearch}
-                    className="toolbar">search</button>
+                    onClick={this._toggleSearch}>search</button>
                 <a onClick={(e) => {this._download(e,'json')}}
                     href="data.json">Export JSON</a>
                 <a onClick={(e) => {this._download(e,'csv')}}
@@ -200,7 +199,7 @@ export default class extends React.Component {
             </tr>
         });
         return (
-            <table border="1">
+            <table className="data-table" border="1">
                 <thead onClick={this._sort}>
                     <tr>
                         {headerView}

@@ -3,25 +3,39 @@ import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
 
 export default class App extends React.Component {
-  render() {
-    var data = {
+  constructor() {
+    super();
+    this.state = {
       headers: [
         "name",
         "age",
-        "qualification"
+        "qualification",
+        "rating"
       ],
       data: [
-          ["a", "29", "B.Com"],
-          ["b", "49", "B.Tech"],
-          ["c", "33", "B.Sc"]
+          ["a", "29", "B.Com",3],
+          ["b", "49", "B.Tech",2],
+          ["c", "33", "B.Sc",4]
         ]
     }
-    return (
-      <div>
-        <h3>Excel online</h3>
-       <Excel model={data} />
-      </div>
-    );
+
+    for(var i = 1; i <= 20; i ++) {
+      this.state.data.push([
+        "name " + i,
+        i + 18,
+        "Graduate",
+        (i%2 ? 3 : 4)
+      ])
+    }
+  }
+
+  render() {
+      return (
+        <div className="App">
+          <h3>Excel online</h3>
+        <Excel model={this.state} />
+        </div>
+      );
   }
 }
 
