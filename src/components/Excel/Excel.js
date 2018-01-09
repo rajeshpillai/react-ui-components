@@ -7,11 +7,23 @@ export default class extends React.Component {
     }
 
     state = {
-        model: this.props.model
+        headers: this.props.model.headers,
+        data: this.props.model.data
     }
 
+    _sort=(e) => {
+        var data = this.state.data;
+        var column = e.target.cellIndex;
+        data.sort((a,b) => {
+            return a[column] > b[column];
+        });
+
+        this.setState({
+            data: data
+        });
+    }
     render() {
-        var {headers,data} = this.state.model;
+        var {headers,data} = this.state;
         var headerView = headers.map((header) => {
             return (
                 <th>
@@ -29,7 +41,7 @@ export default class extends React.Component {
         });
         return (
             <table border="1">
-                <thead>
+                <thead onClick={this._sort}>
                     <tr>
                         {headerView}
                     </tr>
