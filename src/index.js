@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import AppDragDropDemo from './AppDragDropDemo';
+import App from './App';
+
 const DATA = [
     {
         id: 1,
@@ -19,5 +21,5 @@ const DATA = [
 
 console.log(DATA);
 
-ReactDOM.render(<AppDragDropDemo countries={DATA} />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
