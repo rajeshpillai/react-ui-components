@@ -10,7 +10,8 @@ export default class extends React.Component {
         headers: this.props.model.headers,
         data: this.props.model.data,
         sortby: null,
-        descending: false
+        descending: false,
+        edit: null, // {row: index, cell: index}
     }
 
     _sort=(e) => {
@@ -29,6 +30,16 @@ export default class extends React.Component {
             descending
         });
     }
+
+    _showEditor = (e) => {
+        this.setState({ 
+            edit: {
+                row: parseInt(e.target.dataset.row, 10),
+                cell: e.target.cellIndex
+            }
+        });
+    }
+
     render() {
         var {headers,data} = this.state;
         var headerView = headers.map((header, index) => {
@@ -36,16 +47,24 @@ export default class extends React.Component {
                 header += this.state.descending ? '\u2191': '\u2193'
             }
             return (
-                <th>
+                <th key={index}>
                     {header}
                 </th>
             )
         });
 
-        var contentView = data.map((row) => {
-            return <tr>
-                {row.map((col) => {
-                    return <td>{col}</td>
+        var contentView = data.map((row, rowIdx) => {
+            var edit = this.state.edit;
+            return <tr key={rowIdx}>
+                {row.map((col, idx) => {
+                    let content = col;
+                    if (edit && edit.row === rowIdx && edit.cell===idx) {
+                        content = <form>
+                            <input type="text" defaultValue={content} />
+                        </form>
+                    }
+                    return <td key={idx} 
+                        data-row={rowIdx}>{content}</td>
                 })}
             </tr>
         });
@@ -56,8 +75,7 @@ export default class extends React.Component {
                         {headerView}
                     </tr>
                 </thead>
-                <tbody>
-                    
+                <tbody onDoubleClick={this._showEditor}>
                     {contentView}
                 </tbody>
             </table>
