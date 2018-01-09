@@ -27,7 +27,7 @@ export default class extends React.Component {
                 :a[column] > b[column];
         });
 
-        this.setState({
+        this.logSetState({
             data: data,
             sortby: column,
             descending
@@ -35,7 +35,7 @@ export default class extends React.Component {
     }
 
     _showEditor = (e) => {
-        this.setState({ 
+        this.logSetState({ 
             edit: {
                 row: parseInt(e.target.dataset.row, 10),
                 cell: e.target.cellIndex
@@ -54,7 +54,7 @@ export default class extends React.Component {
         data[this.state.edit.row][this.state.edit.cell] = input.value;
 
         // Update state
-        this.setState({
+        this.logSetState({
             edit: null, // done editing
             data: data
         });
@@ -63,14 +63,14 @@ export default class extends React.Component {
 
     _toggleSearch = () => {
         if (this.state.search) {
-            this.setState({
+            this.logSetState({
                 data: this._preSearchData,
                 search: false
             });
             this._preSearchData = null;
         } else {
             this._preSearchData = this.state.data;
-            this.setState({
+            this.logSetState({
                 search: true
             });
         }
@@ -79,7 +79,7 @@ export default class extends React.Component {
     _search = (e) => {
         var needle = e.target.value.toLowerCase();
         if (!needle) {
-            this.setState({
+            this.logSetState({
                 data: this._preSearchData
             })
             return;
@@ -88,9 +88,9 @@ export default class extends React.Component {
         var searchdata = this._preSearchData.filter((row) => {
             return row[idx].toString().toLowerCase().indexOf(needle) > -1;
         });
-        this.setState({
+        this.logSetState({
             data: searchdata
-        })
+        });
     }
 
     _renderSearch = () => {
@@ -108,6 +108,35 @@ export default class extends React.Component {
             </tr>
         );
     }
+
+    _log = []
+
+    logSetState = (newState) => {
+        // remember the old state in a clone
+        if (this._log.length === 0) {
+            this._log.push(JSON.parse(JSON.stringify(this.state)));
+        }
+        this._log.push(JSON.parse(JSON.stringify(newState)));
+        this.setState(newState);
+
+    }
+
+    _replay = () => {
+        console.log("replaying...", this._log);
+        if (this._log.length === 0) {
+            console.warn("No state to replay yet");
+            return;
+        }
+        var idx = -1;
+        var interval = setInterval (() => {
+            idx++;
+            if (idx === this._log.length -1) {
+                clearInterval(interval);
+            }
+            this.setState(this._log[idx]);
+        }, 1000);
+    }
+
 
     _renderToolbar = () =>{
         return (
@@ -160,6 +189,14 @@ export default class extends React.Component {
         );
     }
 
+    
+    componentDidMount() {
+        document.onkeydown = (e) => {
+            if (e.altKey && e.shiftKey && e.which === 82) { // ALT+SHIFT+R(eplay)
+             this._replay();
+            }
+        }
+    }
     render() {
         return (
             <div>
