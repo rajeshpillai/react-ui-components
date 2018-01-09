@@ -15,6 +15,8 @@ export default class extends React.Component {
         search: false
     }
 
+    _preSearchData = null
+
     _sort=(e) => {
         var data = this.state.data;
         var column = e.target.cellIndex;
@@ -60,9 +62,18 @@ export default class extends React.Component {
     }
 
     _toggleSearch = () => {
-        this.setState({
-            search: !this.state.search
-        })
+        if (this.state.search) {
+            this.setState({
+                data: this._preSearchData,
+                search: false
+            });
+            this._preSearchData = null;
+        } else {
+            this._preSearchData = this.state.data;
+            this.setState({
+                search: true
+            });
+        }
     }
 
     _renderSearch = () => {
