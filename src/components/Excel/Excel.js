@@ -76,12 +76,29 @@ export default class extends React.Component {
         }
     }
 
+    _search = (e) => {
+        var needle = e.target.value.toLowerCase();
+        if (!needle) {
+            this.setState({
+                data: this._preSearchData
+            })
+            return;
+        }
+        var idx = e.target.dataset.idx;
+        var searchdata = this._preSearchData.filter((row) => {
+            return row[idx].toString().toLowerCase().indexOf(needle) > -1;
+        });
+        this.setState({
+            data: searchdata
+        })
+    }
+
     _renderSearch = () => {
         if (!this.state.search) {
             return null;
         }
         return (
-            <tr>
+            <tr onChange={this._search}>
                 {this.state.headers.map((_ignore, idx) => {
                     return (<td key={idx}>
                             <input type="text" data-idx={idx} />
