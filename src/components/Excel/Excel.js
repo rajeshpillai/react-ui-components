@@ -137,12 +137,37 @@ export default class extends React.Component {
         }, 1000);
     }
 
+    _download = (e, format) => {
+        var contents = format === 'json'?
+            JSON.stringify(this.state.data)
+            : this.state.data.reduce((result, row) => {
+                return result
+                    + row.reduce((rowresult, cell, idx) => {
+                        return rowresult 
+                            + '"'
+                            + cell.replace(/"/g, '""')
+                            + '"'
+                            + (idx < row.length - 1 ? ',' : '');
+                    }, '')
+                    + "\n";
+                },'');
+        var URL = window.URL || window.webkitURL;
+        var blob = new Blob([contents], {type: 'text/' + format});
+        e.target.href = URL.createObjectURL(blob);
+        e.target.download = 'data.' + format;
+    }
 
     _renderToolbar = () =>{
         return (
-            <button 
-                onClick={this._toggleSearch}
-                className="toolbar">search</button>
+            <div className="toolbar">
+                <button 
+                    onClick={this._toggleSearch}
+                    className="toolbar">search</button>
+                <a onClick={(e) => {this._download(e,'json')}}
+                    href="data.json">Export JSON</a>
+                <a onClick={(e) => {this._download(e,'csv')}}
+                    href="data.json">Export CSV</a>
+            </div>
         );
     }
 
