@@ -35,7 +35,6 @@ export default class App extends React.Component {
         <div className="App">
           <h3>Excel online</h3>
         <Excel model={this.state} />
-        <ExcelOnline model={this.state} />
         </div>
       );
   }

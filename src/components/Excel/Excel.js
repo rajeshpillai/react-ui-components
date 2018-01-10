@@ -17,7 +17,7 @@ export default class extends React.Component {
 
     _preSearchData = null
 
-    _sort=(e) => {
+    sort=(e) => {
         var data = this.state.data.slice();
         var column = e.target.cellIndex;
         var descending = this.state.sortby === column && !this.state.descending;
@@ -40,7 +40,7 @@ export default class extends React.Component {
         });
     }
 
-    _showEditor = (e) => {
+    showEditor = (e) => {
         this.logSetState({ 
             edit: {
                 row: parseInt(e.target.dataset.row, 10),
@@ -49,7 +49,7 @@ export default class extends React.Component {
         });
     }
 
-    _save = (e) => {
+    save = (e) => {
         e.preventDefault();
         var input = e.target.firstChild;
 
@@ -67,7 +67,7 @@ export default class extends React.Component {
 
     }
 
-    _toggleSearch = () => {
+    toggleSearch = () => {
         if (this.state.search) {
             this.logSetState({
                 data: this._preSearchData,
@@ -82,7 +82,7 @@ export default class extends React.Component {
         }
     }
 
-    _search = (e) => {
+    search = (e) => {
         var needle = e.target.value.toLowerCase();
         if (!needle) {
             this.logSetState({
@@ -99,12 +99,12 @@ export default class extends React.Component {
         });
     }
 
-    _renderSearch = () => {
+    renderSearch = () => {
         if (!this.state.search) {
             return null;
         }
         return (
-            <tr onChange={this._search}>
+            <tr onChange={this.search}>
                 {this.state.headers.map((_ignore, idx) => {
                     return (<td key={idx}>
                             <input type="text" data-idx={idx} />
@@ -124,10 +124,9 @@ export default class extends React.Component {
         }
         this._log.push(JSON.parse(JSON.stringify(newState)));
         this.setState(newState);
-
     }
 
-    _replay = () => {
+    replay = () => {
         console.log("replaying...", this._log);
         if (this._log.length === 0) {
             console.warn("No state to replay yet");
@@ -143,7 +142,7 @@ export default class extends React.Component {
         }, 1000);
     }
 
-    _download = (e, format) => {
+    download = (e, format) => {
         var contents = format === 'json'?
             JSON.stringify(this.state.data)
             : this.state.data.reduce((result, row) => {
@@ -163,20 +162,20 @@ export default class extends React.Component {
         e.target.download = 'data.' + format;
     }
 
-    _renderToolbar = () =>{
+    renderToolbar = () =>{
         return (
             <div className="toolbar">
                 <button 
-                    onClick={this._toggleSearch}>search</button>
-                <a onClick={(e) => {this._download(e,'json')}}
+                    onClick={this.toggleSearch}>search</button>
+                <a onClick={(e) => {this.download(e,'json')}}
                     href="data.json">Export JSON</a>
-                <a onClick={(e) => {this._download(e,'csv')}}
+                <a onClick={(e) => {this.download(e,'csv')}}
                     href="data.json">Export CSV</a>
             </div>
         );
     }
 
-    _renderTable = () => {
+    renderTable = () => {
         var {headers,data} = this.state;
         var headerView = headers.map((header, index) => {
             if (this.state.sortby === index) {
@@ -195,7 +194,7 @@ export default class extends React.Component {
                 {row.map((col, idx) => {
                     let content = col;
                     if (edit && edit.row === rowIdx && edit.cell===idx) {
-                        content = <form onSubmit={this._save}>
+                        content = <form onSubmit={this.save}>
                             <input type="text" defaultValue={content} />
                         </form>
                     }
@@ -206,13 +205,13 @@ export default class extends React.Component {
         });
         return (
             <table className="data-table" border="1">
-                <thead onClick={this._sort}>
+                <thead onClick={this.sort}>
                     <tr>
                         {headerView}
                     </tr>
                 </thead>
-                <tbody onDoubleClick={this._showEditor}>
-                    {this._renderSearch()}
+                <tbody onDoubleClick={this.showEditor}>
+                    {this.renderSearch()}
                     {contentView}
                 </tbody>
             </table>
@@ -223,15 +222,15 @@ export default class extends React.Component {
     componentDidMount() {
         document.onkeydown = (e) => {
             if (e.altKey && e.shiftKey && e.which === 82) { // ALT+SHIFT+R(eplay)
-             this._replay();
+             this.replay();
             }
         }
     }
     render() {
         return (
             <div>
-             {this._renderToolbar()}
-             {this._renderTable()}
+             {this.renderToolbar()}
+             {this.renderTable()}
             </div>
         )
     }
