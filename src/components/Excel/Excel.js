@@ -244,7 +244,6 @@ export default  class Excel extends React.Component {
             console.log("HEADER VIEW: ", this.state.headers);
             return (<tr key={rowIdx}>
                  {headers.map((header, index) => {
-                    if (header.title == row.title) return;
                     let content = row[header.title];// row[header.title];//row[col];
                     console.log("CONTENT: ", content);
                     if (edit && edit.row === rowIdx && edit.cell===index) {
