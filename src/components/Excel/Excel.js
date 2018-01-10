@@ -55,7 +55,6 @@ export default  class Excel extends React.Component {
         var input = e.target.firstChild;
 
         var header  = this.state.headers[this.state.edit.cell];
-        console.log("SAVE: ", header);
 
         // Clone the data
         var data = this.state.data.slice();
@@ -242,19 +241,25 @@ export default  class Excel extends React.Component {
 
         var contentView = data.map((row, rowIdx) => {
             var edit = this.state.edit;
-            return <tr key={rowIdx}>
-                {Object.keys(row).map((col, idx) => {
-                    let content = row[col];
-                    if (edit && edit.row === rowIdx && edit.cell===idx) {
+            console.log("HEADER VIEW: ", this.state.headers);
+            return (<tr key={rowIdx}>
+                 {headers.map((header, index) => {
+                    if (header.title == row.title) return;
+                    let content = row[header.title];// row[header.title];//row[col];
+                    console.log("CONTENT: ", content);
+                    if (edit && edit.row === rowIdx && edit.cell===index) {
                         content = <form onSubmit={this.save}>
                             <input type="text" defaultValue={content} />
                         </form>
                     }
-                    return <td key={idx} 
+                    return (<td key={index} 
                         data-row={rowIdx}>{content}</td>
+                    );
                 })}
-            </tr>
+            </tr>);
         });
+
+        console.log("Content View: ", contentView);
         return (
             <table className="data-table" border="1">
                 <thead onClick={this.sort}>
