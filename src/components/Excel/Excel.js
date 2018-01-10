@@ -18,15 +18,21 @@ export default class extends React.Component {
     _preSearchData = null
 
     _sort=(e) => {
-        var data = this.state.data;
+        var data = this.state.data.slice();
         var column = e.target.cellIndex;
         var descending = this.state.sortby === column && !this.state.descending;
         data.sort((a,b) => {
-            return descending
-                ? a[column] < b[column]
-                :a[column] > b[column];
+            var sortVal = 0;
+            if (a[column] < b[column]) {
+                sortVal = -1;
+            } else if (a[column] > b[column]){
+                sortVal = 1;
+            }
+            if (descending) {sortVal = sortVal * -1;}
+            return sortVal;
         });
 
+        console.log("SORTED: BY:", column, data);
         this.logSetState({
             data: data,
             sortby: column,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
+import ExcelOnline from './components/Excel/ExcelOnline';
 
 export default class App extends React.Component {
   constructor() {
@@ -13,13 +14,13 @@ export default class App extends React.Component {
         "rating"
       ],
       data: [
-          ["a", "29", "B.Com",3],
-          ["b", "49", "B.Tech",2],
-          ["c", "33", "B.Sc",4]
+          ["a", 29, "B.Com",3],
+          ["b", 49, "B.Tech",2],
+          ["c", 33, "B.Sc",4]
         ]
     }
 
-    for(var i = 1; i <= 20; i ++) {
+    for(var i = 1; i <= 15; i ++) {
       this.state.data.push([
         "name " + i,
         i + 18,
@@ -34,6 +35,7 @@ export default class App extends React.Component {
         <div className="App">
           <h3>Excel online</h3>
         <Excel model={this.state} />
+        <ExcelOnline model={this.state} />
         </div>
       );
   }
