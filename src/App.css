@@ -62,5 +62,9 @@
 
 .data-table th {
   background-color: cornflowerblue;
+  padding: 7px;
+}
 
+.data-table td {
+  padding: 5px;
 }
