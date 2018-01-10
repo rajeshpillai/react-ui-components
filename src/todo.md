@@ -1,11 +1,13 @@
-Issues:
-=========
-Sorting bug
 
-todos
+*inprogress
+============
+* header drag/drop
+
+pending
 ==========
 * cancel cell edit
 * additive search
+
 
 
 Features
@@ -16,3 +18,6 @@ Features
 * Double click to edit
 * Export data
 * Replay state
+
+Issues:
+=========

@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-export default class extends React.Component {
+export default  class Excel extends React.Component {
     constructor(props) {
         console.log(props);
         super(props);
@@ -19,7 +20,8 @@ export default class extends React.Component {
 
     sort=(e) => {
         var data = this.state.data.slice();
-        var column = e.target.cellIndex;
+        var column = ReactDOM.findDOMNode(e.target).parentNode.cellIndex; 
+        //column = e.target.cellIndex;
         var descending = this.state.sortby === column && !this.state.descending;
         data.sort((a,b) => {
             var sortVal = 0;
@@ -177,13 +179,18 @@ export default class extends React.Component {
 
     renderTable = () => {
         var {headers,data} = this.state;
+        console.log("Rendering:headers:", headers);
         var headerView = headers.map((header, index) => {
+            console.log("header: ", header);
+            let title = header.title;
             if (this.state.sortby === index) {
-                header += this.state.descending ? '\u2191': '\u2193'
+                title += this.state.descending ? '\u2191': '\u2193'
             }
             return (
                 <th key={index}>
-                    {header}
+                    <span draggable className="header-cell">
+                        {title}
+                    </span>
                 </th>
             )
         });

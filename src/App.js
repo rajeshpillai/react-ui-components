@@ -8,10 +8,10 @@ export default class App extends React.Component {
     super();
     this.state = {
       headers: [
-        "name",
-        "age",
-        "qualification",
-        "rating"
+        {title:"name",index: 0},
+        {title:"age",index: 1},
+        {title:"qualification",index:2},
+        {title:"rating",index:3}
       ],
       data: [
           ["a", 29, "B.Com",3],
