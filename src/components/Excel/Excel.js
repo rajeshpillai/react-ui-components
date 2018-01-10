@@ -54,11 +54,15 @@ export default  class Excel extends React.Component {
         e.preventDefault();
         var input = e.target.firstChild;
 
+        var header  = this.state.headers[this.state.edit.cell];
+        console.log("SAVE: ", header);
+
         // Clone the data
         var data = this.state.data.slice();
 
         // Update the data
-        data[this.state.edit.row][this.state.edit.cell] = input.value;
+        //data[this.state.edit.row][this.state.edit.cell] = input.value;
+        data[this.state.edit.row][header.title]= input.value;
 
         // Update state
         this.logSetState({
