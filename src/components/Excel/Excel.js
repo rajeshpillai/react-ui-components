@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 export default  class Excel extends React.Component {
     constructor(props) {
-        console.log(props);
         super(props);
     }
 
@@ -21,20 +20,20 @@ export default  class Excel extends React.Component {
     sort=(e) => {
         var data = this.state.data.slice();
         var column = ReactDOM.findDOMNode(e.target).parentNode.cellIndex; 
+        console.log("SORT: column", column, e.target.dataset.col);
+        var colTitle = e.target.dataset.col;
         //column = e.target.cellIndex;
         var descending = this.state.sortby === column && !this.state.descending;
         data.sort((a,b) => {
             var sortVal = 0;
-            if (a[column] < b[column]) {
+            if (a[colTitle] < b[colTitle]) {
                 sortVal = -1;
-            } else if (a[column] > b[column]){
+            } else if (a[colTitle] > b[colTitle]){
                 sortVal = 1;
             }
             if (descending) {sortVal = sortVal * -1;}
             return sortVal;
         });
-
-        console.log("SORTED: BY:", column, data);
         this.logSetState({
             data: data,
             sortby: column,
@@ -194,24 +193,43 @@ export default  class Excel extends React.Component {
         e.preventDefault();
         var source = e.dataTransfer.getData("source");
         console.log(`DROPPED  ${source} at ${target}`);
+        var headers = [...this.state.headers];
+        var srcHeader = headers[source];
+        var targetHeader = headers[target];
+
+        var temp = srcHeader.index;
+        srcHeader.index = targetHeader.index;
+        targetHeader.index = temp;
+
+        this.logSetState({
+            headers
+        })
+
     }
 
     renderTable = () => {
         var {headers,data} = this.state;
-        console.log("Rendering:headers:", headers);
+
+        headers.sort((a, b) => {
+            if (a.index > b.index) return 1;
+            return -1;
+        })
         var headerView = headers.map((header, index) => {
-            console.log("header: ", header);
             let title = header.title;
+            let cleanTitle = header.title;
             if (this.state.sortby === index) {
                 title += this.state.descending ? '\u2191': '\u2193'
             }
             return (
                 <th key={index} 
+                    data-col={cleanTitle}
                     onDragStart={(e)=>this.onDragStart(e, index)}
                     onDrag={(e)=>this.onDrag(e, index)}
                     onDragOver={(e)=>this.onDragover(e)}
                     onDrop={(e) =>{this.onDrop(e, index)}} >
-                    <span draggable className="header-cell">
+                    <span 
+                        data-col={cleanTitle}
+                        draggable className="header-cell">
                         {title}
                     </span>
                 </th>
@@ -221,8 +239,8 @@ export default  class Excel extends React.Component {
         var contentView = data.map((row, rowIdx) => {
             var edit = this.state.edit;
             return <tr key={rowIdx}>
-                {row.map((col, idx) => {
-                    let content = col;
+                {Object.keys(row).map((col, idx) => {
+                    let content = row[col];
                     if (edit && edit.row === rowIdx && edit.cell===idx) {
                         content = <form onSubmit={this.save}>
                             <input type="text" defaultValue={content} />

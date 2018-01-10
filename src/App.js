@@ -14,19 +14,19 @@ export default class App extends React.Component {
         {title:"rating",index:3}
       ],
       data: [
-          ["a", 29, "B.Com",3],
-          ["b", 49, "B.Tech",2],
-          ["c", 33, "B.Sc",4]
+          {name:"a", age:29, qualification:"B.Com",rating:3},
+          {name:"b", age:35, qualification:"B.Sc",rating:2},
+          {name:"c", age:42, qualification:"B.E",rating:3},
         ]
     }
 
     for(var i = 1; i <= 15; i ++) {
-      this.state.data.push([
-        "name " + i,
-        i + 18,
-        "Graduate",
-        (i%2 ? 3 : 4)
-      ])
+      this.state.data.push({
+        name: "name " + i,
+        age: i + 18,
+        qualification: "Graduate",
+        rating: (i%2 ? 3 : 4)
+      })
     }
   }
 
