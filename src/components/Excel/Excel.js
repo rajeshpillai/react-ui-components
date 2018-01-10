@@ -177,6 +177,25 @@ export default  class Excel extends React.Component {
         );
     }
 
+    onDragStart = (e, source) => {
+        console.log('dragstart:',source);
+        e.dataTransfer.setData("source", source);
+    }
+
+    onDrag = (ev, id) => {
+        console.log('drag:',id);
+    }
+
+    onDragover = (e) => {
+        e.preventDefault();
+    }
+
+    onDrop = (e, target) => {
+        e.preventDefault();
+        var source = e.dataTransfer.getData("source");
+        console.log(`DROPPED  ${source} at ${target}`);
+    }
+
     renderTable = () => {
         var {headers,data} = this.state;
         console.log("Rendering:headers:", headers);
@@ -187,7 +206,11 @@ export default  class Excel extends React.Component {
                 title += this.state.descending ? '\u2191': '\u2193'
             }
             return (
-                <th key={index}>
+                <th key={index} 
+                    onDragStart={(e)=>this.onDragStart(e, index)}
+                    onDrag={(e)=>this.onDrag(e, index)}
+                    onDragOver={(e)=>this.onDragover(e)}
+                    onDrop={(e) =>{this.onDrop(e, index)}} >
                     <span draggable className="header-cell">
                         {title}
                     </span>
