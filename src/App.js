@@ -20,14 +20,16 @@ export default class App extends React.Component {
         ]
     }
 
-    for(var i = 1; i <= 15; i ++) {
-      this.state.data.push({
+    var data = [];
+    for(var i = 1; i <= 100; i ++) {
+      data.push({
         name: "name " + i,
         age: i + 18,
         qualification: "Graduate",
         rating: (i%2 ? 3 : 4)
       })
     }
+    this.state.data = [...this.state.data, ...data]
   }
 
   render() {

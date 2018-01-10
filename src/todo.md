@@ -1,10 +1,6 @@
 
 *inprogress
 ============
-* header drag/drop
-
-pending
-==========
 * cancel cell edit
 * additive search
 
@@ -18,6 +14,11 @@ Features
 * Double click to edit
 * Export data
 * Replay state
+* header drag/drop
+
+pending
+==========
+
 
 Issues:
 =========

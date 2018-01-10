@@ -243,9 +243,10 @@ export default  class Excel extends React.Component {
             var edit = this.state.edit;
             console.log("HEADER VIEW: ", this.state.headers);
             return (<tr key={rowIdx}>
+                // Loop through headers 
                  {headers.map((header, index) => {
-                    let content = row[header.title];// row[header.title];//row[col];
-                    console.log("CONTENT: ", content);
+                    // Get the content for the header.  This will work with col reordering.
+                    let content = row[header.title];
                     if (edit && edit.row === rowIdx && edit.cell===index) {
                         content = <form onSubmit={this.save}>
                             <input type="text" defaultValue={content} />
