@@ -243,8 +243,9 @@ export default  class Excel extends React.Component {
             var edit = this.state.edit;
             console.log("HEADER VIEW: ", this.state.headers);
             return (<tr key={rowIdx}>
-                // Loop through headers 
-                 {headers.map((header, index) => {
+                 {
+                    // Loop through headers 
+                    headers.map((header, index) => {
                     // Get the content for the header.  This will work with col reordering.
                     let content = row[header.title];
                     if (edit && edit.row === rowIdx && edit.cell===index) {
