@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
 import ExcelOnline from './components/Excel/ExcelOnline';
+import If from './components/Core/If';
 
 export default class App extends React.Component {
   constructor() {
@@ -36,7 +37,17 @@ export default class App extends React.Component {
       return (
         <div className="App">
           <h3>Excel online</h3>
-        <Excel model={this.state} />
+          <If condition={1 == 1}>
+            {"Hello world"}
+         </If>
+
+         <If condition={1 == 2}>
+           {"This is not outputted"}
+         </If>
+
+          <Excel model={this.state} />
+
+        
         </div>
       );
   }
