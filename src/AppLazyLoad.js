@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import LazyLoad from "./components/LazyLoad";
 import './App.css';
 
+import InputTag from "./components/InputTag";
+
 export default class AppLazyLoad extends React.Component {
   constructor() {
     super();
@@ -29,6 +31,7 @@ export default class AppLazyLoad extends React.Component {
 
       return (
         <div className="App">
+           <InputTag placeholder="press space to create tags" />
            <h2>Images are lazy loaded using custom react component. Click on the 
              image to open in a modal.  This uses the withModal HOC that we built.
            </h2>
