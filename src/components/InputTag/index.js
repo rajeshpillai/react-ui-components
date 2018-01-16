@@ -1,15 +1,10 @@
 import React from 'react';
+import Tag from './Tag';
 
 const cStyle={
     position: "relative",
     display:"inline-block",
     width: "300px"
-};
-const tagStyle ={
-    display: "inline-block",
-    backgroundColor: "yellow",
-    fontSize: "0.9em",
-    margin: "5px"
 };
 
 const iStyle ={
@@ -34,15 +29,29 @@ export default class InputTag extends React.Component {
             e.target.value="";
         }
     }
+
+    onDeleteTag = (tag) => {
+        //var tags = this.state.tags.concat();
+        var tags = this.state.tags.filter((t) =>{
+            return (t !== tag) ;
+        });
+        this.updateState(tags);
+    }
+
+    updateState(nextState) {
+        console.log("NextState: ", nextState);
+        this.setState({
+            tags:nextState
+        })
+    }
+
     render() {
         var tags = this.state.tags.map((tag) => {
-            return <span style={tagStyle}>
-                {tag}
-            </span>
+            return <Tag onDeleteTag={this.onDeleteTag} key={tag} value={tag} />
         })
         return (
             <div style={cStyle}>
-            {tags}
+              {tags}
               <input style={iStyle} onKeyUp={(e) => this.onKeyUp(e)} type="text" placeholder={this.props.placeholder} />
             </div>
         )

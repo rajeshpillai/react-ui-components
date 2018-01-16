@@ -14,8 +14,6 @@ export default class LazyComponent extends React.Component {
         var self = this;
         image.src = this.props.data.url;
         image.onload = function () {
-            console.log("THIS: ", this);
-            console.log("Image loaded...",self.props.data.url);
             self.onImageLoaded();
         }
     }

@@ -34,11 +34,9 @@ const withModal = (WrappedComponent) => {
         }
 
         shouldComponentUpdate(nextProps, nextState) {
-            console.log("withModal: scu:", nextProps, nextState);
             return true;
         }
         render () {
-            console.log("withMdal:render");
             return (
                 <div  onClick={(e)=> { this.onShow(e) }}>
                      <WrappedComponent {...this.props} />

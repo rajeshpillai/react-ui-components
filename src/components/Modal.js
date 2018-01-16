@@ -3,14 +3,12 @@ import React from 'react';
 
 export default class Modal extends React.Component {
     componentWillReceiveProps(nextProps) {
-      console.log("Modal: cwRP:", nextProps);
       this.setState({
         show: nextProps.show
       })
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      console.log("Modal: scu:", nextProps, nextState);
       return true;
   }
     
