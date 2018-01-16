@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
 import ExcelOnline from './components/Excel/ExcelOnline';
 import If from './components/Core/If';
+import ForLoop from './components/Core/ForLoop';
 
 export default class App extends React.Component {
   constructor() {
@@ -22,7 +23,7 @@ export default class App extends React.Component {
     }
 
     var data = [];
-    for(var i = 1; i <= 100; i ++) {
+    for(var i = 1; i <= 10; i ++) {
       data.push({
         name: "name " + i,
         age: i + 18,
@@ -34,6 +35,8 @@ export default class App extends React.Component {
   }
 
   render() {
+      var i = 0;
+
       return (
         <div className="App">
           <h3>Excel online</h3>
@@ -46,7 +49,6 @@ export default class App extends React.Component {
          </If>
 
           <Excel model={this.state} />
-
         
         </div>
       );

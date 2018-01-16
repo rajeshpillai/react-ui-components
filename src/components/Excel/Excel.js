@@ -20,7 +20,6 @@ export default  class Excel extends React.Component {
     sort=(e) => {
         var data = this.state.data.slice();
         var column = ReactDOM.findDOMNode(e.target).parentNode.cellIndex; 
-        console.log("SORT: column", column, e.target.dataset.col);
         var colTitle = e.target.dataset.col;
         //column = e.target.cellIndex;
         var descending = this.state.sortby === column && !this.state.descending;
@@ -241,7 +240,6 @@ export default  class Excel extends React.Component {
 
         var contentView = data.map((row, rowIdx) => {
             var edit = this.state.edit;
-            console.log("HEADER VIEW: ", this.state.headers);
             return (<tr key={rowIdx}>
                  {
                     // Loop through headers 
@@ -260,7 +258,6 @@ export default  class Excel extends React.Component {
             </tr>);
         });
 
-        console.log("Content View: ", contentView);
         return (
             <table className="data-table" border="1">
                 <thead onClick={this.sort}>
