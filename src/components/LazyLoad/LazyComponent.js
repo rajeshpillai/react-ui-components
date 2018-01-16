@@ -28,7 +28,7 @@ export default class LazyComponent extends React.Component {
                     <img src={this.props.data.url} /> :
                     <h2>loading {this.props.data.url}...</h2>
         return (
-            <div>
+            <div className="box">
                  {compo}
             </div>
         )

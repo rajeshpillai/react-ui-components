@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import LazyLoad from "./components/LazyLoad";
+import './App.css';
 
 export default class AppLazyLoad extends React.Component {
   constructor() {

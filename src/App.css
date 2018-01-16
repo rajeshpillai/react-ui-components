@@ -68,3 +68,10 @@
 .data-table td {
   padding: 5px;
 }
+
+.box {
+  float: left;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid gainsboro;
+}
