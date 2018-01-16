@@ -6,26 +6,50 @@ const withModal = (WrappedComponent) => {
         state = {
             isOpen: false
         }
-        toggleModal = () => { 
+
+        onShow = (e) => { 
+            console.log("withModal: onShow clicked : ",e.target.dataset.action);
+            
+            // Since "onClick" is assigned to parent div, we have to check
+            // if the target is modal-close, then do not setstate.
+            if (e.target.dataset.action === "modal-close") return;
             this.setState({
-                isOpen: !this.state.isOpen,
+                isOpen: true,
             });
         }
-        onClick = (e) => {
-            this.toggleModal();  
+
+        onToggle = () => { 
+            console.log("withModal: onToggle() clicked..");
+            this.setState({
+                isOpen: !this.state.isOpen
+            });
+        }
+
+        onClose = (e) => {
+            console.log("withModal: onClose clicked : ", e, e.target);
+            this.setState((prevState) => {
+                console.log("prevState: ", prevState);
+                return {isOpen: false};
+            }, () => {console.log("After Modal update: ", this.state)});
+        }
+
+        shouldComponentUpdate(nextProps, nextState) {
+            console.log("withModal: scu:", nextProps, nextState);
+            return true;
         }
         render () {
+            console.log("withMdal:render");
             return (
-                <div onClick={(e)=> { this.onClick(e) }}>
+                <div  onClick={(e)=> { this.onShow(e) }}>
                      <WrappedComponent {...this.props} />
-                     <Modal show={this.state.isOpen}>
+                     <Modal show={this.state.isOpen} onClose={this.onClose}>
                             <WrappedComponent {...this.props} />
                     </Modal>
                 </div>
             );
         }
     }
-    _WithModal.displayName = "WithBorder";
+    _WithModal.displayName = "WithModal";
     return _WithModal
 }
 

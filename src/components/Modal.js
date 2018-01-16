@@ -2,7 +2,20 @@
 import React from 'react';
 
 export default class Modal extends React.Component {
+    componentWillReceiveProps(nextProps) {
+      console.log("Modal: cwRP:", nextProps);
+      this.setState({
+        show: nextProps.show
+      })
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+      console.log("Modal: scu:", nextProps, nextState);
+      return true;
+  }
+    
     render() {
+      console.log("Modal:render()");
       // Render nothing if the "show" prop is false
       if(!this.props.show) {
         return null;
@@ -34,14 +47,15 @@ export default class Modal extends React.Component {
         position: "absolute",
         bottom:20
       };
-  
+      
+     
       return (
         <div className="backdrop" style={backdropStyle}>
           <div className="modal" style={modalStyle}>
             {this.props.children}
   
             <div style={footerStyle}>
-              <button onClick={this.props.onClose}>
+              <button data-action="modal-close" onClick={(e)=>{this.props.onClose(e)}}>
                 Close
               </button>
             </div>
