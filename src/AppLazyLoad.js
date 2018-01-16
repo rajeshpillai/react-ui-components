@@ -29,6 +29,7 @@ export default class AppLazyLoad extends React.Component {
 
       return (
         <div className="App">
+           <h2>Images are lazy loaded using custom react component</h2>
            <LazyLoad data={this.state.images} />
         </div>
       );

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import withModal from '../HOC/withModal';
+
 export default class LazyComponent extends React.Component {
     state = {
         isLoaded: false

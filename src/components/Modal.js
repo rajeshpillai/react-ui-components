@@ -28,13 +28,17 @@ export default class Modal extends React.Component {
         margin: '0 auto',
         padding: 30
       };
+
+      const footerStyle ={
+        
+      };
   
       return (
         <div className="backdrop" style={backdropStyle}>
           <div className="modal" style={modalStyle}>
             {this.props.children}
   
-            <div className="footer">
+            <div style={footerStyle}>
               <button onClick={this.props.onClose}>
                 Close
               </button>
