@@ -21,7 +21,9 @@ export default class InputTag extends React.Component {
         console.log(e.which);
         if (e.which === 32 || e.which ===13) {
             let input = e.target.value.trim().split(" ");
-            console.log(input);
+            console.log("Input: ",input);
+
+            if (input.length === 0 || input[0] === "") return;  // empty tags
 
             this.setState({
                 tags: [...this.state.tags, input]
