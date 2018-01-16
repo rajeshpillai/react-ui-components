@@ -26,11 +26,13 @@ export default class Modal extends React.Component {
         maxWidth: 500,
         minHeight: 300,
         margin: '0 auto',
-        padding: 30
+        padding: 30,
+        position: "relative"
       };
 
       const footerStyle ={
-        
+        position: "absolute",
+        bottom:20
       };
   
       return (
