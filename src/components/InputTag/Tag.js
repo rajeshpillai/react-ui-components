@@ -4,7 +4,9 @@ const tagStyle ={
     display: "inline-block",
     backgroundColor: "yellow",
     fontSize: "0.9em",
-    margin: "5px"
+    margin: "5px",
+    border: "1px solid lightblue",
+    padding:"2px"
 };
 
 export default class Tag extends React.Component {

@@ -4,14 +4,17 @@ import Tag from './Tag';
 const cStyle={
     position: "relative",
     display:"inline-block",
-    width: "300px"
+    width: "300px",
+    border: "1px solid pink",
+    overflow:"auto",
 };
 
 const iStyle ={
     display: "inline-block",
     fontSize: "0.9em",
     margin: "5px",
-    minWidth:"1.2em"
+    minWidth:"1.2em",
+    border: "0"
 }
 export default class InputTag extends React.Component {
     state = {
