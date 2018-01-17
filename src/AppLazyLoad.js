@@ -10,6 +10,8 @@ export default class AppLazyLoad extends React.Component {
     super();
     this.state = {
       images: [
+        {url:"./img/img1.jpg"},
+        {url:"./img/img2.jpg"},
         {url:"http://lorempixel.com/400/200/sports/",timeout:10000},
         {url:"http://lorempixel.com/400/200/animals/",timeout:5000},
         {url:"http://lorempixel.com/g/400/200/",timeout:20000}
