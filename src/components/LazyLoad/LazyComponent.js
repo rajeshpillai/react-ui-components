@@ -20,19 +20,31 @@ export default class LazyComponent extends React.Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount() {
-        console.log("REF: ", this.img);
-        var image = this.img;
-        //var image = new Image();
-        var self = this;
+
+    
+    load(img) {
+        console.log("End: ", new Date());
+        var image = img;
         image.src = this.props.data.url;
-        image.onload = function () {
-            self.onImageLoaded();
+        image.onload = () => {
+            this.onImageLoaded();
         }
 
-        image.onerror = function() {
-            self.onImageLoadError(self.props.data.url);
+        image.onerror = () => {
+            this.onImageLoadError(this.props.data.url);
         };
+    }
+
+    componentDidMount() {
+        console.log("REF: ", this.img);
+        //var image = new Image();
+        console.log(`Loading image after ${this.props.data.timeout} ms...`)
+        console.log("Start: ", new Date());
+        this.interval = setTimeout(()=>{this.load(this.img)}, this.props.data.timeout);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     onImageLoadError = () => {
@@ -42,24 +54,17 @@ export default class LazyComponent extends React.Component {
     }
 
     onImageLoaded = () => {
+        console.log("Setting loaded to true...");
         this.setState({
             isLoaded: true
         });
     }
     render() {
-        var compo = this.state.isLoaded ?
-                    <img ref={(img) => this.img = img} src={this.props.data.url} /> 
-                : this.state.isError ?
-                    <h2>Error loading {this.props.data.url}</h2>
-                    :
-                    <h2>loading {this.props.data.url}...</h2>
         return (
             <div style={style}>
-                {this.state.isLoaded || <h3>Loading...</h3>}
-                {this.state.isError || <h3>Error loading...</h3>}
-                
+                {this.state.isLoaded ? <h3>Loaded</h3> : <h3>Loading...</h3>}
+                {this.state.isError && <h3>Error loading...</h3>}
                 <img ref={(img) => this.img = img} /> 
-                 {compo}
             </div>
         )
     }
