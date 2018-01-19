@@ -135,9 +135,10 @@ export default class Calendar extends React.Component {
         });
     }
 
-    showYearEditor = (e) => {
+    showYearEditor = () => {
         this.setState({
             showYearEditor: true
+        }, () => {
         });
     }
 
@@ -225,10 +226,12 @@ export default class Calendar extends React.Component {
 
                                 {this.state.showYearEditor ?
                                     <input 
+                                        defaultValue={this.year()}
+                                        ref={(yearInput)=>{this.yearInput=yearInput}}
                                         onKeyUp={(e)=>{this.onKeyUpYear(e)}}
                                         type="text" placeholder="year" />
                                   : <span 
-                                        onDoubleClick ={(e)=>{this.showYearEditor(e)}}>
+                                        onDoubleClick ={(e)=>{this.showYearEditor()}}>
                                     {this.year()}
                                         
                                      </span>
