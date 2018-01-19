@@ -37,7 +37,6 @@ class SelectList extends React.Component {
 export default class Calendar extends React.Component {
     constructor() {
         super();
-        
     }
 
     state  = {
@@ -97,6 +96,14 @@ export default class Calendar extends React.Component {
         })
     }
 
+    setYear = (year) => {
+        var dateContext = Object.assign({},this.state.dateContext);
+        dateContext = moment(dateContext).set('year', year);
+        this.setState({
+            dateContext: dateContext
+        })
+    }
+
     nextMonth = () => {
         var dateContext = Object.assign({},this.state.dateContext);
         dateContext = moment(dateContext).add(1, "month");
@@ -114,6 +121,9 @@ export default class Calendar extends React.Component {
 
     onDayClick = (e, day) => {
         alert(day);
+        console.log("selected: ", this.state.dateContext);
+        console.log("today: ", this.state.today);
+        
     }
 
     changeMonth = (e, month) => {
@@ -125,13 +135,21 @@ export default class Calendar extends React.Component {
         });
     }
 
-    changeYear = (e, year) => {
+    showYearEditor = (e) => {
         this.setState({
-            showYearPopup: !this.state.showYearPopup
+            showYearEditor: true
         });
     }
 
-    
+    onKeyUpYear = (e) => {
+        if (e.which === 13 || e.which === 27) {  // enter or  esc key
+            this.setYear(e.target.value);
+            this.setState({
+                showYearEditor: false
+            });
+
+        }
+    }
 
     render() {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
@@ -203,11 +221,18 @@ export default class Calendar extends React.Component {
                                 <span 
                                     onClick = {(e)=>{this.changeMonth(e,this.month())}}>{this.month()}
                                 </span>
-                               
-                                
                                 {" "}
-                                <span 
-                                    onClick = {(e)=>{this.changeYear(e,this.year())}}>{this.year()}</span>
+
+                                {this.state.showYearEditor ?
+                                    <input 
+                                        onKeyUp={(e)=>{this.onKeyUpYear(e)}}
+                                        type="text" placeholder="year" />
+                                  : <span 
+                                        onDoubleClick ={(e)=>{this.showYearEditor(e)}}>
+                                    {this.year()}
+                                        
+                                     </span>
+                                }
                             </td>
                             <td colSpan="1">
                                 <i className="fa fa-fw fa-chevron-right"
