@@ -218,7 +218,7 @@ export default class Calendar extends React.Component {
                         mouse={this.state.mouse} data = {this.months} />
                 }
                 <table className="calendar">
-                    <tbody>
+                    <thead>
                         <tr className="calendar-header">
                             <td colSpan="1">
                                 <i className="fa fa-fw fa-chevron-left"
@@ -238,11 +238,11 @@ export default class Calendar extends React.Component {
                                         onKeyUp={(e)=>{this.onKeyUpYear(e)}}
                                         onChange={(e)=>{this.onYearChange(e)}}
                                         type="number" placeholder="year" />
-                                  : <span 
+                                : <span 
                                         onDoubleClick ={(e)=>{this.showYearEditor()}}>
                                     {this.year()}
                                         
-                                     </span>
+                                    </span>
                                 }
                             </td>
                             <td colSpan="1">
@@ -251,6 +251,9 @@ export default class Calendar extends React.Component {
                                 </i>
                             </td>
                         </tr>
+                    </thead>
+                    <tbody>
+                        
                         <tr>
                             {weekdays}
                         </tr>
