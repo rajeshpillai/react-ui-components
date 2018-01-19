@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import AppDragDropDemo from './AppDragDropDemo';
-import AppLazyLoad from './AppLazyLoad';
+import AppWithCalendar from './AppWithCalendar';
 
 
-ReactDOM.render(<AppLazyLoad />, document.getElementById('root'));
+ReactDOM.render(<AppWithCalendar />, document.getElementById('root'));
 registerServiceWorker();
