@@ -152,6 +152,10 @@ export default class Calendar extends React.Component {
         }
     }
 
+    onYearChange = (e) => {
+        this.setYear(e.target.value);
+    }
+
     render() {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
         let weekdays = this.weekdaysShort.map((day) => {
@@ -229,7 +233,8 @@ export default class Calendar extends React.Component {
                                         defaultValue={this.year()}
                                         ref={(yearInput)=>{this.yearInput=yearInput}}
                                         onKeyUp={(e)=>{this.onKeyUpYear(e)}}
-                                        type="text" placeholder="year" />
+                                        onChange={(e)=>{this.onYearChange(e)}}
+                                        type="number" placeholder="year" />
                                   : <span 
                                         onDoubleClick ={(e)=>{this.showYearEditor()}}>
                                     {this.year()}
