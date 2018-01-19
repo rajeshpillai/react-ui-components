@@ -73,8 +73,6 @@ export default class Calendar extends React.Component {
             blanks.push(<td className="emptySlot">{":)"}</td>);
         }
 
-        console.log("blanks.length: ", blanks.length);
-           
         var daysInMonth = [];
         for(let d = 0; d < this.daysInMonth(); d++) {
             daysInMonth.push( 
@@ -91,13 +89,17 @@ export default class Calendar extends React.Component {
         let t = []; 
         
         totalSlots.forEach((row, i) => {
-            if ((i % 6) !== 0) {
+            if ((i % 7) !== 0) {
                 t.push(row);
             }else {
                 let insertRow = t.slice();
                 trs.push(insertRow);
                 t = [];
                 t.push(row);
+            }
+            if (i === totalSlots.length-1) {
+                let insertRow = t.slice();
+                trs.push(insertRow);
             }
         });
         var trElems = trs.map((t) => {
@@ -107,16 +109,16 @@ export default class Calendar extends React.Component {
         });
         return (
             <div>
+                <div className="calendar-header">
+                    <i className="fa fa-fw fa-chevron-left"
+                    onClick = {(e)=>{this.subtractMonth()}}>
+                    </i>
+                    <h4>{this.month()} {" "} {this.year()}</h4>
+                    <i className="fa fa-fw fa-chevron-right"
+                    onClick = {(e)=>{this.addMonth()}}>
+                    </i>
+                </div>
                 <table className="calendar">
-                    <div className="calendar-header">
-                        <i className="fa fa-fw fa-chevron-left"
-                        onClick = {(e)=>{this.subtractMonth()}}>
-                        </i>
-                        <h4>{this.month()} {" "} {this.year()}</h4>
-                        <i className="fa fa-fw fa-chevron-right"
-                        onClick = {(e)=>{this.addMonth()}}>
-                        </i>
-                    </div>
                     <tr className="weekdays">
                         {weekdays}
                     </tr>
