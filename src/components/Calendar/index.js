@@ -66,6 +66,14 @@ export default class Calendar extends React.Component {
         alert(day);
     }
 
+    changeMonth = (e, month) => {
+        alert(month);
+    }
+
+    changeYear = (e, year) => {
+        alert(year);
+    }
+
     render() {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
         let weekdays = this.weekdaysShort.map((day) => {
@@ -77,7 +85,7 @@ export default class Calendar extends React.Component {
         // Store the empty slot in calendar, beginning of month.
         let blanks = [];
         for(let i = 0; i < this.firstDayOfMonth(); i++) {
-            blanks.push(<td key={i} className="emptySlot">{""}</td>);
+            blanks.push(<td key={i*80} className="emptySlot">{""}</td>);
         }
 
         // Create <td> for all days in the given month
@@ -111,7 +119,7 @@ export default class Calendar extends React.Component {
             }
         });
         var trElems = rows.map((t,i) => {
-            return <tr key={i}>
+            return <tr key={i*100}>
                 {t}
                 </tr>
         });
@@ -126,7 +134,9 @@ export default class Calendar extends React.Component {
                             </i>
                             </td>
                             <td colSpan="5">
-                                <span>{this.month()} {" "} {this.year()}</span>
+                                <span onClick = {(e)=>{this.changeMonth(e,this.month())}}>{this.month()}</span>
+                                {" "}
+                                <span onClick = {(e)=>{this.changeYear(e,this.year())}}>{this.year()}</span>
                             </td>
                             <td colSpan="1">
                                 <i className="fa fa-fw fa-chevron-right"
