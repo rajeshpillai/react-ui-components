@@ -1,20 +1,56 @@
 import React from 'react';
 import moment from 'moment';
 import './calendar.css';
-import './utils.js';
+import getPosition from './utils';
+
+class SelectList extends React.Component {
+    onClick = (e, data) => {
+        this.props.onListChange(data);
+    }
+    render() {
+        var popup =  this.props.data.map((m) => {
+            return (
+                <div>
+                   <a 
+                        onClick={(e) => {this.onClick(e,m)}} 
+                        href="#"
+                    >
+                        {m}
+                    </a>
+                </div>
+            );
+        });
+        const position = {
+            position: "absolute",
+            top: this.props.mouse.y + 30,
+            left: this.props.mouse.x
+        }
+        return (
+            <div className="popup" style={position}>
+              {popup}
+           </div>
+        );
+    }
+}
+
 
 export default class Calendar extends React.Component {
     constructor() {
         super();
+        
     }
 
     state  = {
         dateContext:  moment(),
         today:  moment(),
+        showMonthPopup: false,
+        showYearPopup: false
     }
 
     weekdays=["Sunday","Monday","Tuesday","Wednessday","Thursday","Friday","Saturday"]
     weekdaysShort=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+    months = moment.months();
+
     year = () => {
         return this.state.dateContext.format("Y");
     }
@@ -48,6 +84,19 @@ export default class Calendar extends React.Component {
         return t.today.format("Y");
     }
 
+    onListChange = (data) => {
+        this.setMonth(data);
+    }
+
+    setMonth = (month) => {
+        var monthNo = this.months.indexOf(month);
+        var dateContext = Object.assign({},this.state.dateContext);
+        dateContext = moment(dateContext).set('month', monthNo);
+        this.setState({
+            dateContext: dateContext
+        })
+    }
+
     nextMonth = () => {
         var dateContext = Object.assign({},this.state.dateContext);
         dateContext = moment(dateContext).add(1, "month");
@@ -68,12 +117,21 @@ export default class Calendar extends React.Component {
     }
 
     changeMonth = (e, month) => {
-        alert(month);
+        var mouse = getPosition(e.target);
+        console.log("monthMouse: ", mouse);
+        this.setState({
+            showMonthPopup: !this.state.showMonthPopup,
+            mouse: mouse
+        });
     }
 
     changeYear = (e, year) => {
-        alert(year);
+        this.setState({
+            showYearPopup: !this.state.showYearPopup
+        });
     }
+
+    
 
     render() {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
@@ -124,8 +182,15 @@ export default class Calendar extends React.Component {
                 {t}
                 </tr>
         });
+
+
         return (
             <div className="calendar-container">
+                {this.state.showMonthPopup &&
+                    <SelectList 
+                         onListChange = {this.onListChange}
+                        mouse={this.state.mouse} data = {this.months} />
+                }
                 <table className="calendar">
                     <tbody>
                         <tr className="calendar-header">
@@ -135,9 +200,14 @@ export default class Calendar extends React.Component {
                             </i>
                             </td>
                             <td colSpan="5">
-                                <span onClick = {(e)=>{this.changeMonth(e,this.month())}}>{this.month()}</span>
+                                <span 
+                                    onClick = {(e)=>{this.changeMonth(e,this.month())}}>{this.month()}
+                                </span>
+                               
+                                
                                 {" "}
-                                <span onClick = {(e)=>{this.changeYear(e,this.year())}}>{this.year()}</span>
+                                <span 
+                                    onClick = {(e)=>{this.changeYear(e,this.year())}}>{this.year()}</span>
                             </td>
                             <td colSpan="1">
                                 <i className="fa fa-fw fa-chevron-right"
