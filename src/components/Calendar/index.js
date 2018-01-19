@@ -47,14 +47,14 @@ export default class Calendar extends React.Component {
         return t.today.format("Y");
     }
 
-    addMonth = () => {
+    nextMonth = () => {
         var dateContext = Object.assign({},this.state.dateContext);
         dateContext = moment(dateContext).add(1, "month");
         this.setState({
             dateContext: dateContext
         })
     }
-    subtractMonth = () => {
+    prevMonth = () => {
         var dateContext = Object.assign({},this.state.dateContext);
         dateContext = moment(dateContext).subtract(1,"month");
         this.setState({
@@ -62,25 +62,28 @@ export default class Calendar extends React.Component {
         })
     }
 
+    onDayClick = (e, day) => {
+        alert(day);
+    }
 
     render() {
         let weekdays = this.weekdaysShort.map((day) => {
             return (
-                <td className="week-day">{day}</td>
+                <td key={day} className="week-day">{day}</td>
             )
         });
 
         let blanks = [];
         for(let i = 0; i < this.firstDayOfMonth(); i++) {
-            blanks.push(<td className="emptySlot">{""}</td>);
+            blanks.push(<td key={i} className="emptySlot">{""}</td>);
         }
 
         var daysInMonth = [];
         for(let d = 1; d <= this.daysInMonth(); d++) {
             let className = (d == this.currentDay() ? "day current-day" : "day")
             daysInMonth.push( 
-                <td className={className} >
-                    {d}
+                <td key ={d} className={className} >
+                    <span onClick={(e)=>{this.onDayClick(e, d)}}>{d}</span>
                 </td>
             );
         }
@@ -105,33 +108,35 @@ export default class Calendar extends React.Component {
                 trs.push(insertRow);
             }
         });
-        var trElems = trs.map((t) => {
-            return <tr>
+        var trElems = trs.map((t,i) => {
+            return <tr key={i}>
                 {t}
                 </tr>
         });
         return (
             <div className="calendar-container">
                 <table className="calendar">
-                    <tr className="calendar-header">
-                        <td colspan="1">
-                            <i className="fa fa-fw fa-chevron-left"
-                             onClick = {(e)=>{this.subtractMonth()}}>
-                           </i>
-                        </td>
-                        <td colspan="5">
-                            <span>{this.month()} {" "} {this.year()}</span>
-                         </td>
-                         <td colspan="1">
-                            <i className="fa fa-fw fa-chevron-right"
-                                  onClick = {(e)=>{this.addMonth()}}>
-                             </i>
-                        </td>
-                    </tr>
-                    <tr>
-                        {weekdays}
-                    </tr>
-                    {trElems}
+                    <tbody>
+                        <tr className="calendar-header">
+                            <td colSpan="1">
+                                <i className="fa fa-fw fa-chevron-left"
+                                onClick = {(e)=>{this.prevMonth()}}>
+                            </i>
+                            </td>
+                            <td colSpan="5">
+                                <span>{this.month()} {" "} {this.year()}</span>
+                            </td>
+                            <td colSpan="1">
+                                <i className="fa fa-fw fa-chevron-right"
+                                    onClick = {(e)=>{this.nextMonth()}}>
+                                </i>
+                            </td>
+                        </tr>
+                        <tr>
+                            {weekdays}
+                        </tr>
+                        {trElems}
+                    </tbody>
                 </table>
             </div>
         );
