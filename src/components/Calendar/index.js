@@ -85,6 +85,7 @@ export default class Calendar extends React.Component {
 
     onListChange = (data) => {
         this.setMonth(data);
+        this.props.onMonthChange && this.props.onMonthChange();
     }
 
     setMonth = (month) => {
@@ -109,21 +110,23 @@ export default class Calendar extends React.Component {
         dateContext = moment(dateContext).add(1, "month");
         this.setState({
             dateContext: dateContext
-        })
+        });
+        this.props.onNextMonth && this.props.onNextMonth();
     }
     prevMonth = () => {
         var dateContext = Object.assign({},this.state.dateContext);
         dateContext = moment(dateContext).subtract(1,"month");
         this.setState({
             dateContext: dateContext
-        })
+        });
+        this.props.onPrevMonth && this.props.onPrevMonth();
     }
 
     onDayClick = (e, day) => {
         alert(day);
         console.log("selected: ", this.state.dateContext);
         console.log("today: ", this.state.today);
-        
+        this.props.onDayClick && this.props.onDayClick();
     }
 
     changeMonth = (e, month) => {
@@ -148,12 +151,12 @@ export default class Calendar extends React.Component {
             this.setState({
                 showYearEditor: false
             });
-
         }
     }
 
     onYearChange = (e) => {
         this.setYear(e.target.value);
+        this.props.onYearChange && this.props.onYearChange();
     }
 
     render() {
