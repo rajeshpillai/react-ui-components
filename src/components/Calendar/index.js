@@ -26,6 +26,9 @@ export default class Calendar extends React.Component {
     currentDate = () => {
         return this.state.dateContext.get("date");
     }
+    currentDay = () => {
+        return this.state.dateContext.format("D");
+    }
     firstDayOfMonth = () => {
         var dateContext = this.state.dateContext;
         var firstDay = moment(dateContext).subtract((this.currentDate() - 1), 'days');
@@ -63,21 +66,21 @@ export default class Calendar extends React.Component {
     render() {
         let weekdays = this.weekdaysShort.map((day) => {
             return (
-                <td>{day}</td>
+                <td className="week-day">{day}</td>
             )
         });
-        console.log("fdom: ", this.firstDayOfMonth());
 
         let blanks = [];
         for(let i = 0; i < this.firstDayOfMonth(); i++) {
-            blanks.push(<td className="emptySlot">{":)"}</td>);
+            blanks.push(<td className="emptySlot">{""}</td>);
         }
 
         var daysInMonth = [];
-        for(let d = 0; d < this.daysInMonth(); d++) {
+        for(let d = 1; d <= this.daysInMonth(); d++) {
+            let className = (d == this.currentDay() ? "day current-day" : "day")
             daysInMonth.push( 
-                <td className="day">
-                    {d+1}
+                <td className={className} >
+                    {d}
                 </td>
             );
         }
@@ -108,25 +111,28 @@ export default class Calendar extends React.Component {
                 </tr>
         });
         return (
-            <div>
-                <div className="calendar-header">
-                    <i className="fa fa-fw fa-chevron-left"
-                    onClick = {(e)=>{this.subtractMonth()}}>
-                    </i>
-                    <h4>{this.month()} {" "} {this.year()}</h4>
-                    <i className="fa fa-fw fa-chevron-right"
-                    onClick = {(e)=>{this.addMonth()}}>
-                    </i>
-                </div>
+            <div className="calendar-container">
                 <table className="calendar">
-                    <tr className="weekdays">
+                    <tr className="calendar-header">
+                        <td colspan="1">
+                            <i className="fa fa-fw fa-chevron-left"
+                             onClick = {(e)=>{this.subtractMonth()}}>
+                           </i>
+                        </td>
+                        <td colspan="5">
+                            <h4>{this.month()} {" "} {this.year()}</h4>
+                         </td>
+                         <td colspan="1">
+                            <i className="fa fa-fw fa-chevron-right"
+                            onClick = {(e)=>{this.addMonth()}}>
+                        </i>
+                        </td>
+                    </tr>
+                    <tr>
                         {weekdays}
                     </tr>
                     {trElems}
                 </table>
-                <pre>
-                    {totalSlots}
-                </pre>
             </div>
         );
     }
