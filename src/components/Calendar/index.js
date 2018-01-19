@@ -120,12 +120,12 @@ export default class Calendar extends React.Component {
                            </i>
                         </td>
                         <td colspan="5">
-                            <h4>{this.month()} {" "} {this.year()}</h4>
+                            <span>{this.month()} {" "} {this.year()}</span>
                          </td>
                          <td colspan="1">
                             <i className="fa fa-fw fa-chevron-right"
-                            onClick = {(e)=>{this.addMonth()}}>
-                        </i>
+                                  onClick = {(e)=>{this.addMonth()}}>
+                             </i>
                         </td>
                     </tr>
                     <tr>
