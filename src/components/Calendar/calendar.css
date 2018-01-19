@@ -23,6 +23,9 @@
 .day, .empty-slot, .week-day {
     text-align: center;
 }
+.day {
+    cursor: pointer;
+}
 
 .current-day {
     background-color: greenyellow;

@@ -67,17 +67,20 @@ export default class Calendar extends React.Component {
     }
 
     render() {
+        // Map the weekdays i.e Sun, Mon, Tue etc as <td>
         let weekdays = this.weekdaysShort.map((day) => {
             return (
                 <td key={day} className="week-day">{day}</td>
             )
         });
 
+        // Store the empty slot in calendar, beginning of month.
         let blanks = [];
         for(let i = 0; i < this.firstDayOfMonth(); i++) {
             blanks.push(<td key={i} className="emptySlot">{""}</td>);
         }
 
+        // Create <td> for all days in the given month
         var daysInMonth = [];
         for(let d = 1; d <= this.daysInMonth(); d++) {
             let className = (d == this.currentDay() ? "day current-day" : "day")
@@ -88,27 +91,26 @@ export default class Calendar extends React.Component {
             );
         }
 
-        // Merge the blank dates and the rest
+        // Merge the blank dates and the rest of days in month
         var totalSlots = [...blanks, ...daysInMonth];
-        let rows = [];
-        var trs = [];
-        let t = []; 
+        var rows = [];
+        let cells = []; 
         
         totalSlots.forEach((row, i) => {
             if ((i % 7) !== 0) {
-                t.push(row);
+                cells.push(row);
             }else {
-                let insertRow = t.slice();
-                trs.push(insertRow);
-                t = [];
-                t.push(row);
+                let insertRow = cells.slice();
+                rows.push(insertRow);
+                cells = [];
+                cells.push(row);
             }
             if (i === totalSlots.length-1) {
-                let insertRow = t.slice();
-                trs.push(insertRow);
+                let insertRow = cells.slice();
+                rows.push(insertRow);
             }
         });
-        var trElems = trs.map((t,i) => {
+        var trElems = rows.map((t,i) => {
             return <tr key={i}>
                 {t}
                 </tr>
