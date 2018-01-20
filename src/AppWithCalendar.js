@@ -17,7 +17,7 @@ export default class AppWithCalendar extends React.Component {
   render() {
     return (
       <div className="App">
-        <Calendar style={style} width="400px" />
+        <Calendar style={style} width="300px" />
       </div>
     );
   }

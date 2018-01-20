@@ -37,7 +37,7 @@ class SelectList extends React.Component {
 export default class Calendar extends React.Component {
     constructor(props) {
         super(props);
-        this.width = props.width || "200px";
+        this.width = props.width || "400px";
         this.style = props.style || {};
         this.style.width = this.width;
     }
@@ -220,16 +220,11 @@ export default class Calendar extends React.Component {
                         onListChange={this.onListChange}
                         mouse={this.state.mouse} data={this.months} />
                 }
-                <table className="calendar">
+                <table className="calendar" style={{ width: this.style.width }}>
                     <thead>
                         <tr className="calendar-header">
-                            <td colSpan="1">
-                                <i className="fa fa-fw fa-chevron-left"
-                                    onClick={(e) => { this.prevMonth() }}>
-                                </i>
-                            </td>
                             <td colSpan="5">
-                                <span
+                                <span className="label-month"
                                     onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
                                 </span>
                                 {" "}
@@ -242,6 +237,7 @@ export default class Calendar extends React.Component {
                                         onChange={(e) => { this.onYearChange(e) }}
                                         type="number" placeholder="year" />
                                     : <span
+                                        className="label-year"
                                         onDoubleClick={(e) => { this.showYearEditor() }}>
                                         {this.year()}
 
@@ -249,7 +245,12 @@ export default class Calendar extends React.Component {
                                 }
                             </td>
                             <td colSpan="1">
-                                <i className="fa fa-fw fa-chevron-right"
+                                <i className="nav-month fa fa-fw fa-chevron-left"
+                                    onClick={(e) => { this.prevMonth() }}>
+                                </i>
+                            </td>
+                            <td colSpan="1">
+                                <i className="nav-month fa fa-fw fa-chevron-right"
                                     onClick={(e) => { this.nextMonth() }}>
                                 </i>
                             </td>
