@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './datatable.css';
 
 export default  class Excel extends React.Component {
     constructor(props) {

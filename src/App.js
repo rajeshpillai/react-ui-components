@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
-import ExcelOnline from './components/Excel/ExcelOnline';
 import If from './components/Core/If';
 
 export default class App extends React.Component {

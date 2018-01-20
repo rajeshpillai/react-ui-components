@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import AppDragDropDemo from './AppDragDropDemo';
+import App from './App';
 import AppWithCalendar from './AppWithCalendar';
 
 
