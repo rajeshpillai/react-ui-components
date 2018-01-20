@@ -8,11 +8,11 @@ class SelectList extends React.Component {
         this.props.onListChange(data);
     }
     render() {
-        var popup =  this.props.data.map((m) => {
+        var popup = this.props.data.map((m) => {
             return (
                 <div>
-                   <a 
-                        onClick={(e) => {this.onClick(e,m)}} 
+                    <a
+                        onClick={(e) => { this.onClick(e, m) }}
                         href="#"
                     >
                         {m}
@@ -27,27 +27,30 @@ class SelectList extends React.Component {
         }
         return (
             <div className="popup" style={position}>
-              {popup}
-           </div>
+                {popup}
+            </div>
         );
     }
 }
 
 
 export default class Calendar extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.width = props.width || "200px";
+        this.style = props.style || {};
+        this.style.width = this.width;
     }
 
-    state  = {
-        dateContext:  moment(),
-        today:  moment(),
+    state = {
+        dateContext: moment(),
+        today: moment(),
         showMonthPopup: false,
         showYearPopup: false
     }
 
-    weekdays=["Sunday","Monday","Tuesday","Wednessday","Thursday","Friday","Saturday"]
-    weekdaysShort=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+    weekdays = ["Sunday", "Monday", "Tuesday", "Wednessday", "Thursday", "Friday", "Saturday"]
+    weekdaysShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     months = moment.months();
 
     year = () => {
@@ -90,7 +93,7 @@ export default class Calendar extends React.Component {
 
     setMonth = (month) => {
         var monthNo = this.months.indexOf(month);
-        var dateContext = Object.assign({},this.state.dateContext);
+        var dateContext = Object.assign({}, this.state.dateContext);
         dateContext = moment(dateContext).set('month', monthNo);
         this.setState({
             dateContext: dateContext
@@ -98,7 +101,7 @@ export default class Calendar extends React.Component {
     }
 
     setYear = (year) => {
-        var dateContext = Object.assign({},this.state.dateContext);
+        var dateContext = Object.assign({}, this.state.dateContext);
         dateContext = moment(dateContext).set('year', year);
         this.setState({
             dateContext: dateContext
@@ -106,7 +109,7 @@ export default class Calendar extends React.Component {
     }
 
     nextMonth = () => {
-        var dateContext = Object.assign({},this.state.dateContext);
+        var dateContext = Object.assign({}, this.state.dateContext);
         dateContext = moment(dateContext).add(1, "month");
         this.setState({
             dateContext: dateContext
@@ -114,8 +117,8 @@ export default class Calendar extends React.Component {
         this.props.onNextMonth && this.props.onNextMonth();
     }
     prevMonth = () => {
-        var dateContext = Object.assign({},this.state.dateContext);
-        dateContext = moment(dateContext).subtract(1,"month");
+        var dateContext = Object.assign({}, this.state.dateContext);
+        dateContext = moment(dateContext).subtract(1, "month");
         this.setState({
             dateContext: dateContext
         });
@@ -169,17 +172,17 @@ export default class Calendar extends React.Component {
 
         // Store the empty slot in calendar, beginning of month.
         let blanks = [];
-        for(let i = 0; i < this.firstDayOfMonth(); i++) {
-            blanks.push(<td key={i*80} className="emptySlot">{""}</td>);
+        for (let i = 0; i < this.firstDayOfMonth(); i++) {
+            blanks.push(<td key={i * 80} className="emptySlot">{""}</td>);
         }
 
         // Create <td> for all days in the given month
         var daysInMonth = [];
-        for(let d = 1; d <= this.daysInMonth(); d++) {
+        for (let d = 1; d <= this.daysInMonth(); d++) {
             let className = (d == this.currentDay() ? "day current-day" : "day")
-            daysInMonth.push( 
-                <td key ={d} className={className} >
-                    <span onClick={(e)=>{this.onDayClick(e, d)}}>{d}</span>
+            daysInMonth.push(
+                <td key={d} className={className} >
+                    <span onClick={(e) => { this.onDayClick(e, d) }}>{d}</span>
                 </td>
             );
         }
@@ -187,73 +190,73 @@ export default class Calendar extends React.Component {
         // Merge the blank dates and the rest of days in month
         var totalSlots = [...blanks, ...daysInMonth];
         var rows = [];
-        let cells = []; 
-        
+        let cells = [];
+
         totalSlots.forEach((row, i) => {
             if ((i % 7) !== 0) {
                 cells.push(row);
-            }else {
+            } else {
                 let insertRow = cells.slice();
                 rows.push(insertRow);
                 cells = [];
                 cells.push(row);
             }
-            if (i === totalSlots.length-1) {
+            if (i === totalSlots.length - 1) {
                 let insertRow = cells.slice();
                 rows.push(insertRow);
             }
         });
-        var trElems = rows.map((t,i) => {
-            return <tr key={i*100}>
+        var trElems = rows.map((t, i) => {
+            return <tr key={i * 100}>
                 {t}
-                </tr>
+            </tr>
         });
 
 
         return (
-            <div className="calendar-container">
+            <div className="calendar-container" style={this.style}>
                 {this.state.showMonthPopup &&
-                    <SelectList 
-                         onListChange = {this.onListChange}
-                        mouse={this.state.mouse} data = {this.months} />
+                    <SelectList
+                        onListChange={this.onListChange}
+                        mouse={this.state.mouse} data={this.months} />
                 }
                 <table className="calendar">
                     <thead>
                         <tr className="calendar-header">
                             <td colSpan="1">
                                 <i className="fa fa-fw fa-chevron-left"
-                                onClick = {(e)=>{this.prevMonth()}}>
-                            </i>
+                                    onClick={(e) => { this.prevMonth() }}>
+                                </i>
                             </td>
                             <td colSpan="5">
-                                <span 
-                                    onClick = {(e)=>{this.changeMonth(e,this.month())}}>{this.month()}
+                                <span
+                                    onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
                                 </span>
                                 {" "}
 
                                 {this.state.showYearEditor ?
-                                    <input 
+                                    <input
                                         defaultValue={this.year()}
-                                        ref={(yearInput)=>{this.yearInput=yearInput}}
-                                        onKeyUp={(e)=>{this.onKeyUpYear(e)}}
-                                        onChange={(e)=>{this.onYearChange(e)}}
+                                        ref={(yearInput) => { this.yearInput = yearInput }}
+                                        onKeyUp={(e) => { this.onKeyUpYear(e) }}
+                                        onChange={(e) => { this.onYearChange(e) }}
                                         type="number" placeholder="year" />
-                                : <span 
-                                        onDoubleClick ={(e)=>{this.showYearEditor()}}>
-                                    {this.year()}
-                                        
+                                    : <span
+                                        onDoubleClick={(e) => { this.showYearEditor() }}>
+                                        {this.year()}
+
                                     </span>
                                 }
                             </td>
                             <td colSpan="1">
                                 <i className="fa fa-fw fa-chevron-right"
-                                    onClick = {(e)=>{this.nextMonth()}}>
+                                    onClick={(e) => { this.nextMonth() }}>
                                 </i>
                             </td>
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         <tr>
                             {weekdays}
                         </tr>
