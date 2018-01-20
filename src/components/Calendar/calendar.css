@@ -18,8 +18,8 @@ tr {
 }
 
 .calendar-header {
+    border-bottom: 1px dashed skyblue;
     font-size: 1.6em;
-    background-color: skyblue;
 }
 
 .calendar-header td {

@@ -1,5 +1,9 @@
 const getPosition = (element) => {
-  var mouse = { x: 0, y: 0, event: null },
+  var mouse = {
+    x: 0,
+    y: 0,
+    event: null
+  },
     body_scrollLeft = document.body.scrollLeft,
     element_scrollLeft = document.documentElement.scrollLeft,
     body_scrollTop = document.body.scrollTop,
