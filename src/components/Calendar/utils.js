@@ -1,26 +1,31 @@
-const getPosition = (el) => {
-    var xPosition = 0;
-    var yPosition = 0;
-   
-    while (el) {
-      if (el.tagName == "BODY") {
-        // deal with browser quirks with body/window/document and page scroll
-        var xScrollPos = el.scrollLeft || document.documentElement.scrollLeft;
-        var yScrollPos = el.scrollTop || document.documentElement.scrollTop;
-   
-        xPosition += (el.offsetLeft - xScrollPos + el.clientLeft);
-        yPosition += (el.offsetTop - yScrollPos + el.clientTop);
-      } else {
-        xPosition += (el.offsetLeft - el.scrollLeft + el.clientLeft);
-        yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
-      }
-   
-      el = el.offsetParent;
-    }
-    return {
-      x: xPosition,
-      y: yPosition
-    };
-  }
+const getPosition = (element) => {
+  var mouse = { x: 0, y: 0, event: null },
+    body_scrollLeft = document.body.scrollLeft,
+    element_scrollLeft = document.documentElement.scrollLeft,
+    body_scrollTop = document.body.scrollTop,
+    element_scrollTop = document.documentElement.scrollTop,
+    offsetLeft = element.offsetLeft,
+    offsetTop = element.offsetTop;
 
-  export default getPosition;
+  element.addEventListener('mousemove', function (event) {
+    var x, y;
+
+    if (event.pageX || event.pageY) {
+      x = event.pageX;
+      y = event.pageY;
+    } else {
+      x = event.clientX + body_scrollLeft + element_scrollLeft;
+      y = event.clientY + body_scrollTop + element_scrollTop;
+    }
+    x -= offsetLeft;
+    y -= offsetTop;
+
+    mouse.x = x;
+    mouse.y = y;
+    mouse.event = event;
+  }, false);
+
+  return mouse;
+}
+
+export default getPosition;
