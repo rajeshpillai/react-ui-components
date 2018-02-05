@@ -7,7 +7,7 @@ export default class Cell extends React.Component {
         this.mine = props.mine ? true : false;
         this.position = props.position;
         this.neighborCount  = props.neighborCount;
-        this.reveal = false;
+        this.revealed = props.revealed;
     }
 
     onCellClick(e) {
@@ -16,10 +16,12 @@ export default class Cell extends React.Component {
 
     render() {
         let index = this.props.index;
+        let revealed = this.props.revealed;
+        let neighCount = this.props.neighborCount;
         return (
             <div className="cell" 
               onClick={(e)=>{this.onCellClick(e)}}>
-              {this.reveal && this.neighborCount}
+              {revealed && neighCount}
               { this.mine &&  <span className="mine">&#x26AB;</span>}
             </div>
         );
