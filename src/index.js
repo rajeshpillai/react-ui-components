@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import App from './App';
-import AppWithCalendar from './AppWithCalendar';
+import AppWithGame from './AppWithGame';
 
 
-ReactDOM.render(<AppWithCalendar />, document.getElementById('root'));
+ReactDOM.render(<AppWithGame />, document.getElementById('root'));
 registerServiceWorker();
