@@ -18,11 +18,13 @@ export default class Cell extends React.Component {
         let mine = this.props.mine;
         let revealed = this.props.revealed;
         let neighCount = this.props.neighborCount;
+        let showMine = (mine && revealed);
         return (
             <div className={"cell " + (revealed ? "revealed": "")} 
               onClick={(e)=>{this.onCellClick(e)}}>
               {revealed && neighCount}
-              { (mine && revealed )&&  <span className="mine">&#x26C7;</span>}
+              { showMine && <span className="mine">&#x26C7;</span>}
+              <span>{mine.toString()}</span>
             </div>
         );
     }

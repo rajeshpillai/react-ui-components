@@ -24,12 +24,17 @@ export default class MineSweeper extends React.Component {
 
     initGame() {
         let grid = make2DArray(10,10);
+
+        this.setState({
+            loading: true
+        });
+        
         for(let x = 0; x < 10; x++) {
             for(let y = 0; y <10; y++) {
                 let m = Math.random(1);
                 grid[x][y] = {
                     random: m,
-                    mine: m < 0.2 ? true: false,
+                    mine: m < 0.2 ? true: false,  // 20% of blocks has mines
                     position: {
                         x: x,
                         y: y
@@ -45,6 +50,10 @@ export default class MineSweeper extends React.Component {
         this.setState({
             grid,
             won: true
+        }, ()=> {
+            this.setState({
+                loading: false
+            })
         });
     }
 
@@ -106,7 +115,7 @@ export default class MineSweeper extends React.Component {
     }
 
     reveal(cell, x, y) {
-        let grid = this.state.grid;
+        let grid = [...this.state.grid];
         console.log("Revealing: ", cell.position.x, cell.position.y);
 
         cell.revealed = true;
@@ -121,7 +130,7 @@ export default class MineSweeper extends React.Component {
     }
 
     gameOver() {
-        let grid = this.state.grid;
+        let grid = [...this.state.grid];
 
         for (let x = 0; x < 10; x++) {
             for (let y = 0; y < 10; y++) {
@@ -151,6 +160,7 @@ export default class MineSweeper extends React.Component {
     render() {
         let grid = this.state.grid;
         let won = this.state.won;
+        let loading = this.state.loading;
 
         let smiley = won ? "🙂" : "🙁";
 
@@ -173,10 +183,10 @@ export default class MineSweeper extends React.Component {
              );
         });
 
-        return (
+        let gameUI =  (
             <div>
-                <header class="header">Minesweepr classic 
-                        <span class="reset" onClick={(e)=>{this.onReset(e)}}>{smiley}</span>
+                <header className="header">Minesweepr classic 
+                        <span className="reset" onClick={(e)=>{this.onReset(e)}}>{smiley}</span>
                 </header>
                 <table>
                     <tbody>
@@ -184,6 +194,12 @@ export default class MineSweeper extends React.Component {
                     </tbody>
                 </table>
             </div>
+        );
+
+        let gameView = loading ? "<h2>loading...</h2>" : gameUI;
+
+        return (
+            gameView
         );
     }
 }
