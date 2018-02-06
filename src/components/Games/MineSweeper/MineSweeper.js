@@ -19,24 +19,22 @@ export default class MineSweeper extends React.Component {
 
     componentDidMount() {
         let grid = make2DArray(10,10);
-        for(let i = 0; i < 10; i++) {
-            for(let j = 0; j <10; j++) {
+        for(let x = 0; x < 10; x++) {
+            for(let y = 0; y <10; y++) {
                 let m = Math.random(1);
-                grid[i][j] = {
+                grid[x][y] = {
                     random: m,
                     mine: m < 0.2 ? true: false,
                     position: {
-                        x: i,
-                        y: j
+                        x: x,
+                        y: y
                     }
                 };
             }
         }
-
-        
-        for (var i = 0; i < 10; i++) {
-            for (var j = 0; j < 10; j++) {
-              this.countMines(grid,i,j);
+        for (let x = 0; x < 10; x++) {
+            for (let y = 0; y < 10; y++) {
+              this.countMines(grid,x,y);
             }
         }
         this.setState({
@@ -44,8 +42,8 @@ export default class MineSweeper extends React.Component {
         });
     }
 
-    countMines(grid, c, r) {
-        let cell = grid[c][r];
+    countMines(grid, x, y) {
+        let cell = grid[x][y];
         
         let neighborCount  = 0;
 
@@ -54,16 +52,17 @@ export default class MineSweeper extends React.Component {
             return;
         }
 
-        for(let x = -1; x <= 1; x++) {
-            if (c+x < 0 ||c+x >= grid.length) {
+        for(let x1 = -1; x1 <= 1; x1++) {
+            if (x+x1 < 0 ||x+x1 >= grid.length) {
                 continue;
             }
                
-            for(let y = -1; y <=1; y++) {
-                if (r+y <0 || r+y >= grid.length) {
+            for(let y1 = -1; y1 <=1; y1++) {
+                if (y+y1 <0 || y1+y1 >= grid.length) {
                     continue;
                 }
-                let ncell = grid[c+x][r+y];
+                let ncell = grid[x+x1][y+y1];
+                if (ncell == null) continue;
                 if (ncell.mine) {
                     neighborCount ++;
                 }
@@ -98,7 +97,6 @@ export default class MineSweeper extends React.Component {
                 }
             }
         }
-        cell.neighborCount  = neighborCount ;
     }
 
     reveal(cell, x, y) {
@@ -107,12 +105,13 @@ export default class MineSweeper extends React.Component {
 
         cell.revealed = true;
         grid[x][y]= cell;
-        this.setState({
-            grid: grid
-        });
         if (cell.neighborCount == 0) {
             this.floodFill(grid, x, y);
         }
+        
+        this.setState({
+            grid: grid
+        });
     }
 
     
@@ -120,26 +119,23 @@ export default class MineSweeper extends React.Component {
         if (cell.mine) {
             alert("You lost..");
         }
-        console.log("state: ", this, cell);
-        let c = this.state.grid[cell.position.x][cell.position.y];
-        this.reveal(c, cell.position.x, cell.position.y);
+        console.log("neighbour: ", cell.neighborCount);
+        this.reveal(cell, cell.position.x, cell.position.y);
     }
 
     render() {
         let grid = this.state.grid;
-        console.log("grid: ", grid);
         var rows = grid.map((item,i) =>{
             var entry = item.map((element,j) => {
              let mine = element.random < 0.5 ? true: false;
               return (
-                <td>
+                  <td  key={i+j} >
                     <Cell  
                      onCellClick = {(e)=>{this.onCellClick(e)}}
                      revealed = {element.revealed}
                      mine={element.mine} 
-                     position={{y:i, x:j}}
+                     position={{y:j, x:i}}
                      neighborCount ={element.neighborCount}
-                     key={i+j} 
                      index={j}/>
                 </td>);
             });
