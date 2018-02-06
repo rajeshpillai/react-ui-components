@@ -19,7 +19,7 @@ export default class Cell extends React.Component {
         let revealed = this.props.revealed;
         let neighCount = this.props.neighborCount;
         return (
-            <div className="cell {revealed ? 'revealed': ''}" 
+            <div className={"cell " + (revealed ? "revealed": "")} 
               onClick={(e)=>{this.onCellClick(e)}}>
               {revealed && neighCount}
               { (mine && revealed )&&  <span className="mine">&#x26AB;</span>}
