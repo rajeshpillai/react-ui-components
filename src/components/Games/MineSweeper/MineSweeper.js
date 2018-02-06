@@ -14,7 +14,8 @@ export default class MineSweeper extends React.Component {
     state = {
         grid:  [],
         won: false,
-        target: 0        
+        target: 0,
+        debug: true    
     }
     
 
@@ -37,7 +38,7 @@ export default class MineSweeper extends React.Component {
         for(let x = 0; x < this.cols; x++) {
             for(let y = 0; y < this.rows; y++) {
                 let m = Math.random(1);
-                let isMine = m < 0.95 ? true: false; // 20% of blocks has mines
+                let isMine = m < 0.70 ? true: false; // 70% of blocks has mines
                 grid[x][y] = {
                     random: m,
                     mine: isMine,  
@@ -183,12 +184,18 @@ export default class MineSweeper extends React.Component {
         this.initGame();
     }
 
+    onDebug = () =>{
+        this.setState({
+            debug: !this.state.debug
+        })
+    }
     render() {
         let grid = this.state.grid;
         let won = this.state.won;
         let loading = this.state.loading;
         let target = this.state.target;
         let smiley = won ? "🙂" : "🙁";
+        let isDebug = this.state.debug;
 
         var rows = grid.map((item,i) =>{
             var entry = item.map((element,j) => {
@@ -201,6 +208,7 @@ export default class MineSweeper extends React.Component {
                      revealed = {element.revealed}
                      mine={element.mine} 
                      position={{y:j, x:i}}
+                     debug={isDebug}
                      won={flag}
                      neighborCount ={element.neighborCount}
                      index={j}/>
@@ -218,6 +226,9 @@ export default class MineSweeper extends React.Component {
                         <span className="reset" 
                             onClick={(e)=>{this.onReset(e)}}>{smiley}
                         </span>
+                        <input type="checkbox" 
+                            checked={isDebug}
+                            onChange={this.onDebug} /> debug
                 </header>
                 <table>
                     <tbody>

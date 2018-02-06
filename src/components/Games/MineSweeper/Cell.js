@@ -21,6 +21,7 @@ export default class Cell extends React.Component {
         let neighCount = this.props.neighborCount;
         let showMine = (mine && revealed);
         let won = this.props.won;
+        let isDebug = this.props.debug;
         return (
             <div className={"cell " + (revealed ? "revealed": "")} 
               onClick={(e)=>{this.onCellClick(e)}}>
@@ -32,7 +33,7 @@ export default class Cell extends React.Component {
                   <span className="mine">&#x26C7;</span>
                   
               </If>   
-              <span>{mine.toString()}</span>  
+              { isDebug && <span>{mine.toString()}</span> }
             </div>
         );
     }
