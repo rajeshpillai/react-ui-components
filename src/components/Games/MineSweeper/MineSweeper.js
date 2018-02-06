@@ -38,7 +38,7 @@ export default class MineSweeper extends React.Component {
         for(let x = 0; x < this.cols; x++) {
             for(let y = 0; y < this.rows; y++) {
                 let m = Math.random(1);
-                let isMine = m < 0.70 ? true: false; // 70% of blocks has mines
+                let isMine = m < 0.20 ? true: false; // 70% of blocks has mines
                 grid[x][y] = {
                     random: m,
                     mine: isMine,  
@@ -158,19 +158,22 @@ export default class MineSweeper extends React.Component {
         for (let x = 0; x < 10; x++) {
             for (let y = 0; y < 10; y++) {
               grid[x][y].revealed = true;
-              grid[x][y].won = this.target <= 0;
+              grid[x][y].won = won;
             }
         }
         this.setState({
             grid,
-            won: this.target <= 0
+            won: won,
+            over: true
         });
     }
     
     onCellClick(cell) {
+        if (this.state.over) return;
+        
         if (cell.mine) {
             this.gameOver(false);
-            alert("You lost..");
+            //alert("You lost..");
             return;
         }
         this.setState({
