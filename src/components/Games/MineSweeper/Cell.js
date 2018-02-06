@@ -1,5 +1,6 @@
 
 import React from 'react';
+import If from '../../Core/If';
 
 export default class Cell extends React.Component {
     constructor(props) {
@@ -19,12 +20,19 @@ export default class Cell extends React.Component {
         let revealed = this.props.revealed;
         let neighCount = this.props.neighborCount;
         let showMine = (mine && revealed);
+        let won = this.props.won;
         return (
             <div className={"cell " + (revealed ? "revealed": "")} 
               onClick={(e)=>{this.onCellClick(e)}}>
               {revealed && neighCount}
-              { showMine && <span className="mine">&#x26C7;</span>}
-              <span>{mine.toString()}</span>
+              <If condition = {showMine && won}>
+                 <span className="mine">&#x26F3;</span>
+              </If>
+              <If condition = {showMine && !won}>
+                  <span className="mine">&#x26C7;</span>
+                  
+              </If>   
+              <span>{mine.toString()}</span>  
             </div>
         );
     }

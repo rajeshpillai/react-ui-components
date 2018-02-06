@@ -7,10 +7,14 @@ import './minesweeper.css';
 export default class MineSweeper extends React.Component {
     width = 200;
     height = 200;
+    cols = 10;
+    rows = 10;
+    target = 0;
     
     state = {
         grid:  [],
-        won: true
+        won: false,
+        target: 0        
     }
     
 
@@ -24,26 +28,32 @@ export default class MineSweeper extends React.Component {
 
     initGame() {
         let grid = make2DArray(10,10);
+        this.target = 0;
 
         this.setState({
             loading: true
         });
         
-        for(let x = 0; x < 10; x++) {
-            for(let y = 0; y <10; y++) {
+        for(let x = 0; x < this.cols; x++) {
+            for(let y = 0; y < this.rows; y++) {
                 let m = Math.random(1);
+                let isMine = m < 0.95 ? true: false; // 20% of blocks has mines
                 grid[x][y] = {
                     random: m,
-                    mine: m < 0.2 ? true: false,  // 20% of blocks has mines
+                    mine: isMine,  
                     position: {
                         x: x,
                         y: y
                     }
                 };
+
+                if (!isMine) {
+                    this.target++;
+                }
             }
         }
-        for (let x = 0; x < 10; x++) {
-            for (let y = 0; y < 10; y++) {
+        for (let x = 0; x < this.cols; x++) {
+            for (let y = 0; y < this.rows; y++) {
               this.countMines(grid,x,y);
             }
         }
@@ -52,7 +62,8 @@ export default class MineSweeper extends React.Component {
             won: true
         }, ()=> {
             this.setState({
-                loading: false
+                loading: false,
+                target: this.target
             })
         });
     }
@@ -119,36 +130,51 @@ export default class MineSweeper extends React.Component {
         console.log("Revealing: ", cell.position.x, cell.position.y);
 
         cell.revealed = true;
+        
+        this.target--;
+
+        if (this.target == 0) {
+            // won
+            this.gameOver(true);
+            return;
+        }
+
         grid[x][y]= cell;
         if (cell.neighborCount == 0) {
             this.floodFill(grid, x, y);
         }
         
         this.setState({
-            grid: grid
+            grid: grid,
+            target: this.target,
+            won: this.target <= 0
         });
     }
 
-    gameOver() {
+    gameOver(won) {
         let grid = [...this.state.grid];
 
         for (let x = 0; x < 10; x++) {
             for (let y = 0; y < 10; y++) {
               grid[x][y].revealed = true;
+              grid[x][y].won = this.target <= 0;
             }
         }
         this.setState({
             grid,
-            won: false
+            won: this.target <= 0
         });
     }
     
     onCellClick(cell) {
         if (cell.mine) {
-            this.gameOver();
+            this.gameOver(false);
             alert("You lost..");
             return;
         }
+        this.setState({
+            target: this.state.target -1
+        });
         console.log("neighbour: ", cell.neighborCount);
         this.reveal(cell, cell.position.x, cell.position.y);
     }
@@ -161,12 +187,13 @@ export default class MineSweeper extends React.Component {
         let grid = this.state.grid;
         let won = this.state.won;
         let loading = this.state.loading;
-
+        let target = this.state.target;
         let smiley = won ? "🙂" : "🙁";
 
         var rows = grid.map((item,i) =>{
             var entry = item.map((element,j) => {
              let mine = element.random < 0.5 ? true: false;
+             let flag = element.won;
               return (
                   <td  key={i+j} >
                     <Cell  
@@ -174,6 +201,7 @@ export default class MineSweeper extends React.Component {
                      revealed = {element.revealed}
                      mine={element.mine} 
                      position={{y:j, x:i}}
+                     won={flag}
                      neighborCount ={element.neighborCount}
                      index={j}/>
                 </td>);
@@ -185,8 +213,11 @@ export default class MineSweeper extends React.Component {
 
         let gameUI =  (
             <div>
+                {target} -> {this.target == 0 && <span>You won!</span>}
                 <header className="header">Minesweepr classic 
-                        <span className="reset" onClick={(e)=>{this.onReset(e)}}>{smiley}</span>
+                        <span className="reset" 
+                            onClick={(e)=>{this.onReset(e)}}>{smiley}
+                        </span>
                 </header>
                 <table>
                     <tbody>
