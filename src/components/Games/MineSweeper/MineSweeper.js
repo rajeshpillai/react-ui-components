@@ -37,7 +37,8 @@ export default class MineSweeper extends React.Component {
 
         this.setState({
             loading: true,
-            level: level
+            level: level,
+            over: false
         });
         
         for(let x = 0; x < this.cols; x++) {
