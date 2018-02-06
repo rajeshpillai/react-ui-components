@@ -9,7 +9,8 @@ export default class MineSweeper extends React.Component {
     height = 200;
     
     state = {
-        grid:  []
+        grid:  [],
+        won: true
     }
     
 
@@ -18,6 +19,10 @@ export default class MineSweeper extends React.Component {
     }
 
     componentDidMount() {
+        this.initGame();
+    }
+
+    initGame() {
         let grid = make2DArray(10,10);
         for(let x = 0; x < 10; x++) {
             for(let y = 0; y <10; y++) {
@@ -38,7 +43,8 @@ export default class MineSweeper extends React.Component {
             }
         }
         this.setState({
-            grid
+            grid,
+            won: true
         });
     }
 
@@ -116,13 +122,15 @@ export default class MineSweeper extends React.Component {
 
     gameOver() {
         let grid = this.state.grid;
+
         for (let x = 0; x < 10; x++) {
             for (let y = 0; y < 10; y++) {
               grid[x][y].revealed = true;
             }
         }
         this.setState({
-            grid
+            grid,
+            won: false
         });
     }
     
@@ -130,13 +138,22 @@ export default class MineSweeper extends React.Component {
         if (cell.mine) {
             this.gameOver();
             alert("You lost..");
+            return;
         }
         console.log("neighbour: ", cell.neighborCount);
         this.reveal(cell, cell.position.x, cell.position.y);
     }
 
+    onReset() {
+        this.initGame();
+    }
+
     render() {
         let grid = this.state.grid;
+        let won = this.state.won;
+
+        let smiley = won ? "🙂" : "🙁";
+
         var rows = grid.map((item,i) =>{
             var entry = item.map((element,j) => {
              let mine = element.random < 0.5 ? true: false;
@@ -157,11 +174,16 @@ export default class MineSweeper extends React.Component {
         });
 
         return (
-            <table>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
+            <div>
+                <header class="header">Minesweepr classic 
+                        <span class="reset" onClick={(e)=>{this.onReset(e)}}>{smiley}</span>
+                </header>
+                <table>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }

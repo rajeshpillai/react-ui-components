@@ -22,7 +22,7 @@ export default class Cell extends React.Component {
             <div className={"cell " + (revealed ? "revealed": "")} 
               onClick={(e)=>{this.onCellClick(e)}}>
               {revealed && neighCount}
-              { (mine && revealed )&&  <span className="mine">&#x26AB;</span>}
+              { (mine && revealed )&&  <span className="mine">&#x26C7;</span>}
             </div>
         );
     }
