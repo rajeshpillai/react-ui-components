@@ -15,7 +15,8 @@ export default class MineSweeper extends React.Component {
         grid:  [],
         won: false,
         target: 0,
-        debug: true    
+        debug: true,
+        level: 1 
     }
     
 
@@ -29,16 +30,20 @@ export default class MineSweeper extends React.Component {
 
     initGame() {
         let grid = make2DArray(10,10);
+        let level = this.state.level;
+
         this.target = 0;
 
+
         this.setState({
-            loading: true
+            loading: true,
+            level: level
         });
         
         for(let x = 0; x < this.cols; x++) {
             for(let y = 0; y < this.rows; y++) {
                 let m = Math.random(1);
-                let isMine = m < 0.20 ? true: false; // 70% of blocks has mines
+                let isMine = m < (level * 10 / 100) ? true: false; // 70% of blocks has mines
                 grid[x][y] = {
                     random: m,
                     mine: isMine,  
@@ -192,6 +197,11 @@ export default class MineSweeper extends React.Component {
             debug: !this.state.debug
         })
     }
+
+    onLevelSliderChange = (e) => {
+        this.setState({level: e.target.value});
+    }
+
     render() {
         let grid = this.state.grid;
         let won = this.state.won;
@@ -225,6 +235,11 @@ export default class MineSweeper extends React.Component {
         let gameUI =  (
             <div>
                 {target} -> {this.target == 0 && <span>You won!</span>}
+                Level: <input ref={(slider)=>{this.slider=slider}} 
+                    type="range" 
+                    onChange={this.onLevelSliderChange}
+                    value={this.state.level}
+                    min="1" max="9" step="1" /> {this.state.level}
                 <header className="header">Minesweepr classic 
                         <span className="reset" 
                             onClick={(e)=>{this.onReset(e)}}>{smiley}
