@@ -25,8 +25,14 @@ export default class MineSweeper extends React.Component {
     }
 
     componentDidMount() {
+        document.onkeydown = (e) => {
+            if (e.altKey && e.shiftKey && e.which === 82) { // ALT+SHIFT+R(eplay)
+             this.replay();
+            }
+        }
         this.initGame();
     }
+
 
     initGame() {
         let grid = make2DArray(10,10);
@@ -35,7 +41,7 @@ export default class MineSweeper extends React.Component {
         this.target = 0;
 
 
-        this.setState({
+        this.logState({
             loading: true,
             level: level,
             over: false
@@ -64,11 +70,11 @@ export default class MineSweeper extends React.Component {
               this.countMines(grid,x,y);
             }
         }
-        this.setState({
+        this.logState({
             grid,
             won: true
         }, ()=> {
-            this.setState({
+            this.logState({
                 loading: false,
                 target: this.target
             })
@@ -151,11 +157,44 @@ export default class MineSweeper extends React.Component {
             this.floodFill(grid, x, y);
         }
         
-        this.setState({
-            grid: grid,
+        this.logState({
+            grid,
             target: this.target,
             won: this.target <= 0
         });
+    }
+
+    _log = [];
+    logState=(newState, onUpdate)=> {
+        // remember the old state in a clone
+        if (this._log.length === 0) {
+            this._log.push(this.state);
+        }
+        this._log.push(newState);
+        if (onUpdate) {
+            this.setState(
+                newState, onUpdate);
+        } else {
+            this.setState(
+                newState
+            );
+        }
+    }
+
+    replay = () => {
+        console.log("replaying...", this._log);
+        if (this._log.length === 0) {
+            console.warn("No state to replay yet");
+            return;
+        }
+        var idx = -1;
+        var interval = setInterval (() => {
+            idx++;
+            if (idx === this._log.length -1) {
+                clearInterval(interval);
+            }
+            this.setState(this._log[idx]);
+        }, 1000);
     }
 
     gameOver(won) {
@@ -167,7 +206,7 @@ export default class MineSweeper extends React.Component {
               grid[x][y].won = won;
             }
         }
-        this.setState({
+        this.logState({
             grid,
             won: won,
             over: true
@@ -182,7 +221,7 @@ export default class MineSweeper extends React.Component {
             //alert("You lost..");
             return;
         }
-        this.setState({
+        this.logState({
             target: this.state.target -1
         });
         console.log("neighbour: ", cell.neighborCount);
@@ -194,13 +233,13 @@ export default class MineSweeper extends React.Component {
     }
 
     onDebug = () =>{
-        this.setState({
+        this.logState({
             debug: !this.state.debug
         })
     }
 
     onLevelSliderChange = (e) => {
-        this.setState({level: e.target.value});
+        this.logState({level: e.target.value});
     }
 
     render() {
@@ -254,6 +293,8 @@ export default class MineSweeper extends React.Component {
                         {rows}
                     </tbody>
                 </table>
+                <footer>press alt+shift+r (to replay)</footer>
+
             </div>
         );
 
