@@ -114,9 +114,21 @@ export default class MineSweeper extends React.Component {
         });
     }
 
+    gameOver() {
+        let grid = this.state.grid;
+        for (let x = 0; x < 10; x++) {
+            for (let y = 0; y < 10; y++) {
+              grid[x][y].revealed = true;
+            }
+        }
+        this.setState({
+            grid
+        });
+    }
     
     onCellClick(cell) {
         if (cell.mine) {
+            this.gameOver();
             alert("You lost..");
         }
         console.log("neighbour: ", cell.neighborCount);

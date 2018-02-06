@@ -15,13 +15,14 @@ export default class Cell extends React.Component {
 
     render() {
         let index = this.props.index;
+        let mine = this.props.mine;
         let revealed = this.props.revealed;
         let neighCount = this.props.neighborCount;
         return (
             <div className="cell {revealed ? 'revealed': ''}" 
               onClick={(e)=>{this.onCellClick(e)}}>
               {revealed && neighCount}
-              { this.mine &&  <span className="mine">&#x26AB;</span>}
+              { (mine && revealed )&&  <span className="mine">&#x26AB;</span>}
             </div>
         );
     }
