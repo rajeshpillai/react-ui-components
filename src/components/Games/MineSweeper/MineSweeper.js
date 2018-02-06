@@ -281,7 +281,7 @@ export default class MineSweeper extends React.Component {
                     value={this.state.level}
                     min="1" max="9" step="1" /> {this.state.level}
                 <header className="header">Minesweepr classic 
-                        <span className="reset" 
+                        <span className="reset" title="click to start the game..."
                             onClick={(e)=>{this.onReset(e)}}>{smiley}
                         </span>
                         <input type="checkbox" 
@@ -293,7 +293,7 @@ export default class MineSweeper extends React.Component {
                         {rows}
                     </tbody>
                 </table>
-                <footer>press alt+shift+r (to replay)</footer>
+                <footer>press alt+shift+r (to replay)->click 🙂 on the header to start again.</footer>
 
             </div>
         );
