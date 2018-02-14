@@ -13,7 +13,7 @@ const iStyle ={
     display: "inline-block",
     fontSize: "0.9em",
     margin: "5px",
-    minWidth:"1.2em",
+    width: "90%",
     border: "0"
 }
 export default class InputTag extends React.Component {

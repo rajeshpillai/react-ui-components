@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
 import If from './components/Core/If';
+import InputTag from './components/InputTag';
 
 export default class App extends React.Component {
   constructor() {
@@ -38,6 +39,8 @@ export default class App extends React.Component {
       return (
         <div className="App">
           <h3>Excel online</h3>
+          <InputTag placeholder="please enter tag separated by space" />
+
           <If condition={1 == 1}>
             {"Hello world"}
          </If>
@@ -47,7 +50,7 @@ export default class App extends React.Component {
          </If>
 
           <Excel model={this.state} />
-        
+
         </div>
       );
   }

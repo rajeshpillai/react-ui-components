@@ -6,5 +6,5 @@ import App from './App';
 import AppWithGame from './AppWithGame';
 
 
-ReactDOM.render(<AppWithGame />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
