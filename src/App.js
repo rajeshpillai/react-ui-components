@@ -3,6 +3,8 @@ import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
 import If from './components/Core/If';
 import InputTag from './components/InputTag';
+import Modal from './components/Modal';
+import './App.css';
 
 export default class App extends React.Component {
   constructor() {
@@ -33,15 +35,30 @@ export default class App extends React.Component {
     this.state.data = [...this.state.data, ...data]
   }
 
+  showModal = () => {
+    this.setState({
+      ...this.state,
+      show: !this.state.show
+    })
+  }
+
   render() {
       var i = 0;
 
       return (
         <div className="App">
-          <h3>Excel online</h3>
+          <h3>Tags:</h3>
           <InputTag placeholder="please enter tag separated by space" />
 
-          <If condition={1 == 1}>
+          <input type="button"
+            onClick={this.showModal}
+            value="Show Modal"/>
+
+          <Modal show={this.state.show} >
+            Hello Modal!
+          </Modal>
+
+          {/* <If condition={1 == 1}>
             {"Hello world"}
          </If>
 
@@ -49,8 +66,9 @@ export default class App extends React.Component {
            {"This is not outputted"}
          </If>
 
+          <h3>Excel online</h3>
           <Excel model={this.state} />
-
+            */}
         </div>
       );
   }
