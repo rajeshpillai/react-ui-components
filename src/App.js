@@ -54,7 +54,7 @@ export default class App extends React.Component {
             onClick={this.showModal}
             value="Show Modal"/>
 
-          <Modal show={this.state.show} >
+          <Modal show={this.state.show} onClose={this.showModal}>
             Hello Modal!
           </Modal>
 
