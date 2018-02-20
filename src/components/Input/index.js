@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {required,email} from '../../Validators';
 
+const validatorError = {
+    display: "inline-block",
+    color: "red"
+}
 export default class Input extends React.Component {
     constructor(props) {
         super(props);
@@ -41,7 +45,7 @@ export default class Input extends React.Component {
                     onBlur={(e) => this.onBlur(e)}
                     type="text" 
                     placeholder={this.props.placeholder} />
-                <span>{this.state.validations}</span>
+                <span style={validatorError}>{this.state.validations}</span>
             </div>
         )
     }
