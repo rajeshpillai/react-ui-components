@@ -4,6 +4,8 @@ import Excel from './components/Excel/Excel';
 import If from './components/Core/If';
 import InputTag from './components/InputTag';
 import Modal from './components/Modal';
+import Input from './components/Input';
+import {required,email,noDuplicate} from './Validators';
 import './App.css';
 
 export default class App extends React.Component {
@@ -57,6 +59,24 @@ export default class App extends React.Component {
           <Modal show={this.state.show} onClose={this.showModal}>
             Hello Modal!
           </Modal>
+
+          <br/>
+
+          <div>
+            <label for="username">Username</label>
+            <Input 
+              name="username"
+              placeholder="enter username"
+              validations={[required]}/>
+          </div>
+         
+          <div>
+            <label for="email">Email</label>
+            <Input 
+              name="email"
+              placeholder="enter some text"
+              validations={[required, email,noDuplicate]}/>
+          </div>
 
           {/* <If condition={1 == 1}>
             {"Hello world"}
