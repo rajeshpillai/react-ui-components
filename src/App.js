@@ -3,14 +3,20 @@ import ReactDOM from "react-dom"
 import Excel from './components/Excel/Excel';
 import If from './components/Core/If';
 import InputTag from './components/InputTag';
+import Calendar from './components/Calendar';
 import Modal from './components/Modal';
 import Input from './components/Input';
+import MineSweeper  from './components/Games/MineSweeper/MineSweeper';
 import {required,email,noDuplicate} from './Validators';
 import './App.css';
 
+import {increment} from './actions/counter';
+
 export default class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.store = props.store;
+    console.log("ctor: ", props);
     this.state = {
       headers: [
         {title:"name",index: 0},
@@ -44,11 +50,21 @@ export default class App extends React.Component {
     })
   }
 
+  onClick = (e) => {
+    //this.store.dispatch({ type: 'INCREMENT' });
+    this.store.dispatch(increment());
+    console.log("store: ", this.store.getState());
+  }
+
   render() {
       var i = 0;
 
       return (
         <div className="App">
+         
+         <input type="button" value= "click me"
+            onClick={(e) => this.onClick(e)} />
+
           <h3>Tags:</h3>
           <InputTag placeholder="please enter tag separated by space" />
 
@@ -85,10 +101,14 @@ export default class App extends React.Component {
          <If condition={1 == 2}>
            {"This is not outputted"}
          </If>
-
+        */}
+          <MineSweeper />
+          <h2>Pick a date</h2>
+          <Calendar />
           <h3>Excel online</h3>
           <Excel model={this.state} />
-            */}
+
+         
         </div>
       );
   }
