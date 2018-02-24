@@ -5,10 +5,10 @@ import './App.css';
 
 export default class AppDragDropDemo extends React.Component {
   state = {
-    boxes: [
-      {name:"yellow",category:"wip"},
-      {name:"red", category:"wip"},
-      {name:"green", category:"complete"}
+    tasks: [
+      {name:"Angular",category:"wip", bgcolor: "yellow"},
+      {name:"React", category:"wip", bgcolor:"pink"},
+      {name:"Vue", category:"complete", bgcolor:"skyblue"}
     ]
   }
 
@@ -31,9 +31,9 @@ export default class AppDragDropDemo extends React.Component {
     var id = ev.dataTransfer.getData("id");
     console.log(`DROPPED task ${id} at ${cat}`);
 
-    var boxes = this.state.boxes;
+    var tasks = this.state.tasks;
 
-    var boxes = boxes.filter((task) => {
+    var tasks = tasks.filter((task) => {
       if (task.name == id) {
         task.category = cat;
       }
@@ -42,16 +42,16 @@ export default class AppDragDropDemo extends React.Component {
 
     this.setState({
       ...this.state ,
-      boxes
+      tasks
     });
   }
 
   render() {
-    var boxes={wip: [], complete:[]}
-    this.state.boxes.forEach((b) => {
-        boxes[b.category].push(
+    var tasks={wip: [], complete:[]}
+    this.state.tasks.forEach((b) => {
+        tasks[b.category].push(
           <div key={b.name} draggable className="draggable"
-                style={{backgroundColor: b.name}}
+                style={{backgroundColor: b.bgcolor}}
             onDragStart={(e) => this.onDragStart(e, b.name)}
             >
             {b.name}
@@ -59,20 +59,21 @@ export default class AppDragDropDemo extends React.Component {
         );
     });
 
-    console.log(boxes);
+    console.log(tasks);
     return (
       <div className="container-drag">
         <h2 className="header">Drag Drop Demo</h2>
         <div className="wip" onDrop={(e) =>{this.onDrop(e, "wip")}}
             onDragOver={(e)=>this.onDragover(e)}>
-           {boxes.wip}
+            <span className="task-header">WIP</span>
+           {tasks.wip}
         </div>
 
         <div className="droppable"
             onDrop={(e) =>{this.onDrop(e, "complete")}}
             onDragOver={(e)=>this.onDragover(e)}>
-        drop here
-          {boxes.complete}
+          <span className="task-header">COMPLETED</span>
+          {tasks.complete}
         </div>
       </div>
     )
