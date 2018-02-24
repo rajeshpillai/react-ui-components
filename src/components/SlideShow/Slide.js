@@ -44,7 +44,7 @@ export default class Slide extends React.Component {
         let url = this.props.url;
         return (
             <div className="slide">
-                {!this.state.isLoaded && <h3>Loading...</h3>}
+                {!this.state.isLoaded && <img src='./img/loading.svg' alt="loading" />}
                 <img ref={(img) => this.img = img} />
             </div>
         );

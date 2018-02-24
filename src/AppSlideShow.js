@@ -10,7 +10,7 @@ export default class AppSimple extends React.Component {
     images: [
       {id: 1, url: "http://lorempixel.com/400/200/sports/", timeout:10000},
       {id: 2, url: "http://lorempixel.com/400/200/animals/",timeout:0},
-      {id: 3, url: "http://lorempixel.com/400/200/business/",timeout:10000},
+      {id: 3, url: "http://lorempixel.com/400/200/business/",timeout:20000},
       {id: 4, url: "http://lorempixel.com/400/200/cats/",timeout:0},
       {id: 5, url: "http://lorempixel.com/400/200/abstrat/",timeout:0},
       {id: 6, url: "http://lorempixel.com/400/200/city/",timeout:0},
