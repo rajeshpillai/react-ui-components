@@ -7,7 +7,6 @@ export default class SlideShow extends React.Component {
         let slides = this.props.slides.map((slide) => {
             return <Slide  key = {slide.id} data = {slide} />
         })
-        
         return (
             <div className="slide-container">
                 {slides}
