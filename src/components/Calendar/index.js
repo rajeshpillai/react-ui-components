@@ -44,18 +44,7 @@ export default class Calendar extends React.Component {
         var firstDay = moment(dateContext).subtract((this.currentDate() - 1), 'days');
         return firstDay.weekday();
     }
-    initialDate = () => {
-        var t = this.state.dateContext;
-        return t.today.get("date");
-    }
-    initialMonth = () => {
-        var t = this.state.dateContext;
-        return t.today.format("MMMM");
-    }
-    initialYear = () => {
-        var t = this.state.dateContext;
-        return t.today.format("Y");
-    }
+    
 
     onListChange = (data) => {
         this.setMonth(data);
@@ -182,6 +171,32 @@ export default class Calendar extends React.Component {
             </tr>
         });
 
+        var MonthNav = (
+            <span className="label-month"
+                onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
+                {this.state.showMonthPopup &&
+                    <SelectList
+                        onListChange={this.onListChange}
+                        mouse={this.state.mouse} data={this.months} />
+                }
+            </span>
+        );
+        var YearNav = (
+             this.state.showYearEditor ?
+                <input
+                    defaultValue={this.year()}
+                    className="editor-year"
+                    ref={(yearInput) => { this.yearInput = yearInput }}
+                    onKeyUp={(e) => { this.onKeyUpYear(e) }}
+                    onChange={(e) => { this.onYearChange(e) }}
+                    type="number" placeholder="year" />
+                : <span
+                    className="label-year"
+                    onDoubleClick={(e) => { this.showYearEditor() }}>
+                    {this.year()}
+
+                </span>
+        );
 
         return (
             <div className="calendar-container" style={this.style}>
@@ -189,31 +204,9 @@ export default class Calendar extends React.Component {
                     <thead>
                         <tr className="calendar-header">
                             <td colSpan="5">
-                                <span className="label-month"
-                                    onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
-                                     {this.state.showMonthPopup &&
-                                        <SelectList
-                                            onListChange={this.onListChange}
-                                            mouse={this.state.mouse} data={this.months} />
-                                    }
-                                </span>
+                                {MonthNav}
                                 {" "}
-
-                                {this.state.showYearEditor ?
-                                    <input
-                                        defaultValue={this.year()}
-                                        className="editor-year"
-                                        ref={(yearInput) => { this.yearInput = yearInput }}
-                                        onKeyUp={(e) => { this.onKeyUpYear(e) }}
-                                        onChange={(e) => { this.onYearChange(e) }}
-                                        type="number" placeholder="year" />
-                                    : <span
-                                        className="label-year"
-                                        onDoubleClick={(e) => { this.showYearEditor() }}>
-                                        {this.year()}
-
-                                    </span>
-                                }
+                                {YearNav}
                             </td>
                             <td colSpan="2" className="nav-month">
                                 <i className="prev fa fa-fw fa-chevron-left"
@@ -226,7 +219,6 @@ export default class Calendar extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-
                         <tr>
                             {weekdays}
                         </tr>
