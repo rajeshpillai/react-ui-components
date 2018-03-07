@@ -39,12 +39,19 @@ export default class Calendar extends React.Component {
     currentDay = () => {
         return this.state.dateContext.format("D");
     }
+
     firstDayOfMonth = () => {
-        var dateContext = this.state.dateContext;
-        var firstDay = moment(dateContext).subtract((this.currentDate() - 1), 'days');
-        return firstDay.weekday();
+        let dateContext = this.state.dateContext;
+        console.log("firstDayOfMonth *: ", moment(dateContext).startOf('month').format('d'));
+        let firstDay = moment(dateContext).startOf('month').format('d');
+        return firstDay;
+        //return firstDay.weekday();
+
+        //  console.log("firstDayOfMonth easy: ", moment(dateContext).weekday());
+        //  console.log("firstDayOfMonth hard: ", firstDay.weekday());
+        // return moment(dateContext).weekday();
     }
-    
+
 
     onListChange = (data) => {
         this.setMonth(data);
@@ -166,6 +173,8 @@ export default class Calendar extends React.Component {
         for (let i = 0; i < this.firstDayOfMonth(); i++) {
             blanks.push(<td key={i * 80} className="emptySlot">{""}</td>);
         }
+
+        console.log("blanks: ", blanks);
 
         // Create <td> for all days in the given month
         var daysInMonth = [];
