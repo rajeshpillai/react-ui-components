@@ -82,6 +82,10 @@ tr {
 .next {
 }
 
+.editor-year {
+    max-width: 3.6em;
+}
+
 .label-month,
 .label-year {
     font-size: 0.6em;

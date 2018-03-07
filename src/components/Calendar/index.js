@@ -202,6 +202,7 @@ export default class Calendar extends React.Component {
                                 {this.state.showYearEditor ?
                                     <input
                                         defaultValue={this.year()}
+                                        className="editor-year"
                                         ref={(yearInput) => { this.yearInput = yearInput }}
                                         onKeyUp={(e) => { this.onKeyUpYear(e) }}
                                         onChange={(e) => { this.onYearChange(e) }}
