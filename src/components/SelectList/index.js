@@ -7,7 +7,7 @@ export default class SelectList extends React.Component {
     render() {
         var popup = this.props.data.map((m) => {
             return (
-                <div>
+                <div key={m}>
                     <a
                         onClick={(e) => { this.onClick(e, m) }}
                         href="#"
