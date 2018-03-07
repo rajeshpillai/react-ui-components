@@ -121,6 +121,38 @@ export default class Calendar extends React.Component {
         this.props.onYearChange && this.props.onYearChange();
     }
 
+    MonthNav = () => {
+        return (
+            <span className="label-month"
+                onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
+                {this.state.showMonthPopup &&
+                    <SelectList
+                        onListChange={this.onListChange}
+                        mouse={this.state.mouse} data={this.months} />
+                }
+            </span>
+        );
+    }
+
+    YearNav = () => {
+        return  (
+            this.state.showYearEditor ?
+            <input
+                defaultValue={this.year()}
+                className="editor-year"
+                ref={(yearInput) => { this.yearInput = yearInput }}
+                onKeyUp={(e) => { this.onKeyUpYear(e) }}
+                onChange={(e) => { this.onYearChange(e) }}
+                type="number" placeholder="year" />
+            : <span
+                className="label-year"
+                onDoubleClick={(e) => { this.showYearEditor() }}>
+                {this.year()}
+
+            </span>
+        );
+    }
+
     render() {
         // Map the weekdays i.e Sun, Mon, Tue etc as <td>
         let weekdays = this.weekdaysShort.map((day) => {
@@ -171,32 +203,8 @@ export default class Calendar extends React.Component {
             </tr>
         });
 
-        var MonthNav = (
-            <span className="label-month"
-                onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
-                {this.state.showMonthPopup &&
-                    <SelectList
-                        onListChange={this.onListChange}
-                        mouse={this.state.mouse} data={this.months} />
-                }
-            </span>
-        );
-        var YearNav = (
-             this.state.showYearEditor ?
-                <input
-                    defaultValue={this.year()}
-                    className="editor-year"
-                    ref={(yearInput) => { this.yearInput = yearInput }}
-                    onKeyUp={(e) => { this.onKeyUpYear(e) }}
-                    onChange={(e) => { this.onYearChange(e) }}
-                    type="number" placeholder="year" />
-                : <span
-                    className="label-year"
-                    onDoubleClick={(e) => { this.showYearEditor() }}>
-                    {this.year()}
-
-                </span>
-        );
+        
+       
 
         return (
             <div className="calendar-container" style={this.style}>
@@ -204,9 +212,9 @@ export default class Calendar extends React.Component {
                     <thead>
                         <tr className="calendar-header">
                             <td colSpan="5">
-                                {MonthNav}
+                                <this.MonthNav />
                                 {" "}
-                                {YearNav}
+                                <this.YearNav/>
                             </td>
                             <td colSpan="2" className="nav-month">
                                 <i className="prev fa fa-fw fa-chevron-left"
