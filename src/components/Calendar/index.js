@@ -203,12 +203,9 @@ export default class Calendar extends React.Component {
             </tr>
         });
 
-        
-       
-
         return (
             <div className="calendar-container" style={this.style}>
-                <table className="calendar" style={{ width: this.style.width }}>
+                <table className="calendar" >
                     <thead>
                         <tr className="calendar-header">
                             <td colSpan="5">
