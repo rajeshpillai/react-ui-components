@@ -20,7 +20,7 @@ export default class AppWithCalendar extends React.Component {
   render() {
     return (
       <div className="App">
-        <Calendar style={style} width="152px" onDayClick={(e, day) => this.onDayClick(e,day)}/>
+        <Calendar style={style} width="302px" onDayClick={(e, day) => this.onDayClick(e,day)}/>
       </div>
     );
   }

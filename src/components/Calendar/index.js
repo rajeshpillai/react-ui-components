@@ -118,7 +118,7 @@ export default class Calendar extends React.Component {
 
     onYearChange = (e) => {
         this.setYear(e.target.value);
-        this.props.onYearChange && this.props.onYearChange();
+        this.props.onYearChange && this.props.onYearChange(e, e.target.value);
     }
 
     MonthNav = () => {
