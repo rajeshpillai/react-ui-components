@@ -73,14 +73,13 @@ tr {
     position: absolute;
     top: 0.6em;
     font-size: 0.6em;
+    right:3px;
 }
 
 .prev {
-    left: 16em;
 }
 
 .next {
-    left: 18em;
 }
 
 .label-month,

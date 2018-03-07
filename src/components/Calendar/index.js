@@ -185,7 +185,6 @@ export default class Calendar extends React.Component {
 
         return (
             <div className="calendar-container" style={this.style}>
-                
                 <table className="calendar" style={{ width: this.style.width }}>
                     <thead>
                         <tr className="calendar-header">
@@ -215,13 +214,11 @@ export default class Calendar extends React.Component {
                                     </span>
                                 }
                             </td>
-                            <td colSpan="1">
-                                <i className="nav-month prev fa fa-fw fa-chevron-left"
+                            <td colSpan="2" className="nav-month">
+                                <i className="prev fa fa-fw fa-chevron-left"
                                     onClick={(e) => { this.prevMonth() }}>
                                 </i>
-                            </td>
-                            <td colSpan="1">
-                                <i className="nav-month next fa fa-fw fa-chevron-right"
+                                <i className="next fa fa-fw fa-chevron-right"
                                     onClick={(e) => { this.nextMonth() }}>
                                 </i>
                             </td>
