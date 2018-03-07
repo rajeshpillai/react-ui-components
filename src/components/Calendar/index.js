@@ -2,36 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import './calendar.css';
 import getPosition from './utils';
-
-class SelectList extends React.Component {
-    onClick = (e, data) => {
-        this.props.onListChange(data);
-    }
-    render() {
-        var popup = this.props.data.map((m) => {
-            return (
-                <div>
-                    <a
-                        onClick={(e) => { this.onClick(e, m) }}
-                        href="#"
-                    >
-                        {m}
-                    </a>
-                </div>
-            );
-        });
-        const position = {
-            position: "absolute",
-            top: this.props.mouse.y + 30,
-            left: this.props.mouse.x
-        }
-        return (
-            <div className="popup" style={position}>
-                {popup}
-            </div>
-        );
-    }
-}
+import SelectList from '../SelectList';
 
 
 export default class Calendar extends React.Component {
@@ -215,17 +186,18 @@ export default class Calendar extends React.Component {
 
         return (
             <div className="calendar-container" style={this.style}>
-                {this.state.showMonthPopup &&
-                    <SelectList
-                        onListChange={this.onListChange}
-                        mouse={this.state.mouse} data={this.months} />
-                }
+                
                 <table className="calendar" style={{ width: this.style.width }}>
                     <thead>
                         <tr className="calendar-header">
                             <td colSpan="5">
                                 <span className="label-month"
                                     onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
+                                     {this.state.showMonthPopup &&
+                                        <SelectList
+                                            onListChange={this.onListChange}
+                                            mouse={this.state.mouse} data={this.months} />
+                                    }
                                 </span>
                                 {" "}
 

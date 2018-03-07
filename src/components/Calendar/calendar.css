@@ -58,9 +58,15 @@ tr {
     color: white;
 }
 
-.popup {
+.month-popup {
+    position: absolute;
+    padding: 5px;
     background: white;
     border: 2px solid skyblue;
+}
+
+.month-popup div {
+    padding: 0.3em;
 }
 
 .nav-month {
@@ -70,4 +76,8 @@ tr {
 .label-month,
 .label-year {
     font-size: 0.6em;
+}
+
+.label-month {
+    cursor: pointer;
 }

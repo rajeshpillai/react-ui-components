@@ -5,6 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 import AppDragDropDemo2 from './AppDragDropDemo2';
 import AppSlideShow from './AppSlideShow';
+import AppWithCalendar from './AppWithCalendar';
 import {createStore, combineReducers} from './myredux';
 
 function counter(state = 0, action) {
@@ -22,7 +23,7 @@ var store = createStore(counter);
 console.log("store: ", store);
 
 function render() {
-  ReactDOM.render(<AppSlideShow />, document.getElementById('root'));
+  ReactDOM.render(<AppWithCalendar />, document.getElementById('root'));
   // ReactDOM.render(<App store = {store} />, document.getElementById('root'));
 }
 

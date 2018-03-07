@@ -8,16 +8,17 @@ import SlideShow from './components/SlideShow';
 export default class AppSimple extends React.Component {
   state = {
     images: [
-      {id: 1, url: "http://lorempixel.com/400/200/sports/", timeout:10000},
-      {id: 2, url: "http://lorempixel.com/400/200/animals/",timeout:0},
-      {id: 3, url: "http://lorempixel.com/400/200/business/",timeout:20000},
-      {id: 4, url: "http://lorempixel.com/400/200/cats/",timeout:0},
-      {id: 5, url: "http://lorempixel.com/400/200/abstrat/",timeout:0},
-      {id: 6, url: "http://lorempixel.com/400/200/city/",timeout:0},
-      {id: 7, url: "http://lorempixel.com/400/200/nature/",timeout:0},
-      {id: 8, url: "http://lorempixel.com/400/200/transport/"},
-      {id: 9, url: "http://lorempixel.com/400/200/fashion/"},
-    ]
+          {id: 1, url: "https://loremflickr.com/300/300/dog"},
+          {id: 2, url: "https://loremflickr.com/300/300/cat"},
+          {id: 3, url: "https://loremflickr.com/300/300/cat"},
+          {id: 4, url: "https://loremflickr.com/300/300?random=1"},
+          {id: 5, url: "https://loremflickr.com/300/300?random=2"},
+          {id: 6, url: "https://loremflickr.com/300/300?random=1"},
+          {id: 7, url: "https://loremflickr.com/300/300?random=1"},
+          {id: 8, url: "https://loremflickr.com/300/300?random=1"},
+          {id: 9, url: "https://loremflickr.com/300/300?random=1"},
+          {id: 10, url: "https://loremflickr.com/300/300?random=1"}
+        ]
   }
 
   render() {
