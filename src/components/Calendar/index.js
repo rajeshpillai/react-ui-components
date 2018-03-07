@@ -216,12 +216,12 @@ export default class Calendar extends React.Component {
                                 }
                             </td>
                             <td colSpan="1">
-                                <i className="nav-month fa fa-fw fa-chevron-left"
+                                <i className="nav-month prev fa fa-fw fa-chevron-left"
                                     onClick={(e) => { this.prevMonth() }}>
                                 </i>
                             </td>
                             <td colSpan="1">
-                                <i className="nav-month fa fa-fw fa-chevron-right"
+                                <i className="nav-month next fa fa-fw fa-chevron-right"
                                     onClick={(e) => { this.nextMonth() }}>
                                 </i>
                             </td>

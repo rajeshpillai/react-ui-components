@@ -70,7 +70,17 @@ tr {
 }
 
 .nav-month {
+    position: absolute;
+    top: 0.6em;
     font-size: 0.6em;
+}
+
+.prev {
+    left: 16em;
+}
+
+.next {
+    left: 18em;
 }
 
 .label-month,
