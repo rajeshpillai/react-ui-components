@@ -14,10 +14,13 @@ export default class AppWithCalendar extends React.Component {
     }
   }
 
+  onDayClick = (e, day) => {
+    alert(day);
+  }
   render() {
     return (
       <div className="App">
-        <Calendar style={style} width="300px" />
+        <Calendar style={style} width="300px" onDayClick={(e, day) => this.onDayClick(e,day)}/>
       </div>
     );
   }

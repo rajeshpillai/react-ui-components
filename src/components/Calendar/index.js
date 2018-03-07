@@ -97,10 +97,9 @@ export default class Calendar extends React.Component {
     }
 
     onDayClick = (e, day) => {
-        alert(day);
         console.log("selected: ", this.state.dateContext);
         console.log("today: ", this.state.today);
-        this.props.onDayClick && this.props.onDayClick();
+        this.props.onDayClick && this.props.onDayClick(e, day);
     }
 
     changeMonth = (e, month) => {
