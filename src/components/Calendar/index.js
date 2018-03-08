@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import './calendar.css';
 import getPosition from './utils';
-import SelectList from '../SelectList';
+//import SelectList from '../SelectList';
 
 
 export default class Calendar extends React.Component {
@@ -128,14 +128,39 @@ export default class Calendar extends React.Component {
         this.props.onYearChange && this.props.onYearChange(e, e.target.value);
     }
 
+    onSelectChange = (e, data) => {
+        this.onListChange(data);
+    }
+
+    SelectList = (props) => {
+        var popup = props.data.map((data) => {
+            return (
+                <div key={data}>
+                    <a
+                        onClick={(e) => { this.onSelectChange(e, data) }}
+                        href="#"
+                    >
+                        {data}
+                    </a>
+                </div>
+            );
+        });
+
+        return (
+            <div className="month-popup">
+                {popup}
+            </div>
+        );
+    }
+
     MonthNav = () => {
         return (
             <span className="label-month"
                 onClick={(e) => { this.changeMonth(e, this.month()) }}>{this.month()}
                 {this.state.showMonthPopup &&
-                    <SelectList
+                    <this.SelectList
                         onListChange={this.onListChange}
-                        mouse={this.state.mouse} data={this.months} />
+                        data={this.months} />
                 }
             </span>
         );
