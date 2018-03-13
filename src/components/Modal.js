@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
  // The gray background
@@ -28,11 +29,12 @@ const footerStyle ={
   bottom:20
 };
 
+const modalRoot = document.getElementById("modal-root");
+
 export default class Modal extends React.Component {
-    componentWillReceiveProps(nextProps) {
-      this.setState({
-        show: nextProps.show
-      })
+    constructor(props) {
+      super(props);
+      this.el = document.createElement("div");
     }
 
     // shouldComponentUpdate(nextProps, nextState) {
@@ -50,24 +52,34 @@ export default class Modal extends React.Component {
     }
 
     componentDidMount() {
+      // The portal element is inserted in the DOM tree after
+      // the Modal's children are mounted, meaning that children
+      // will be mounted on a detached DOM node. If a child
+      // component requires to be attached to the DOM tree
+      // immediately when mounted, for example to measure a
+      // DOM node, or uses 'autoFocus' in a descendant, add
+      // state to Modal and only render the children when Modal
+      // is inserted in the DOM tree.
       document.addEventListener("keyup", this.onKeyUp);
+      modalRoot.appendChild(this.el);
     }
 
     componentWillUnmount() {
       document.removeEventListener("keyup", this.onKeyUp);
+      modalRoot.removeChild(this.el);
+    }
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        show: nextProps.show
+      })
     }
 
     render() {
-      console.log("Modal:render()");
-      // Render nothing if the "show" prop is false
-      if(!this.props.show) {
-        return null;
-      }
-      return (
+      var modalUI = (
         <div className="backdrop" style={backdropStyle} >
           <div className="modal" style={modalStyle}>
             {this.props.children}
-
             <div style={footerStyle}>
               <button data-action="modal-close" onClick={(e)=>{this.onClose(e)}}>
                 Close
@@ -75,6 +87,15 @@ export default class Modal extends React.Component {
             </div>
           </div>
         </div>
+      );
+      console.log("Modal:render()");
+      // Render nothing if the "show" prop is false
+      if(!this.props.show) {
+        return null;
+      }
+      return ReactDOM.createPortal (
+         modalUI,
+         this.el,
       );
     }
   }
