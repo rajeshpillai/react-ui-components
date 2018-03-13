@@ -61,7 +61,7 @@ export default class App extends React.Component {
 
       return (
         <div className="App">
-         
+
          <input type="button" value= "click me"
             onClick={(e) => this.onClick(e)} />
 
@@ -73,22 +73,22 @@ export default class App extends React.Component {
             value="Show Modal"/>
 
           <Modal show={this.state.show} onClose={this.showModal}>
-            Hello Modal!
+              Hello Modal!
           </Modal>
 
           <br/>
 
           <div>
             <label for="username">Username</label>
-            <Input 
+            <Input
               name="username"
               placeholder="enter username"
               validations={[required]}/>
           </div>
-         
+
           <div>
             <label for="email">Email</label>
-            <Input 
+            <Input
               name="email"
               placeholder="enter some text"
               validations={[required, email,noDuplicate]}/>
@@ -102,15 +102,9 @@ export default class App extends React.Component {
            {"This is not outputted"}
          </If>
         */}
-          <MineSweeper />
-          <h2>Pick a date</h2>
-          <Calendar />
           <h3>Excel online</h3>
           <Excel model={this.state} />
-
-         
         </div>
       );
   }
 }
-

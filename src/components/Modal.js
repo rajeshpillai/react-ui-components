@@ -43,16 +43,28 @@ export default class Modal extends React.Component {
       this.props.onClose && this.props.onClose(e);
     }
 
+    onKeyUp = (e) => {
+      if (e.which === 27 && this.props.show) {
+        this.onClose(e);
+      }
+    }
+
+    componentDidMount() {
+      document.addEventListener("keyup", this.onKeyUp);
+    }
+
+    componentWillUnmount() {
+      document.removeEventListener("keyup", this.onKeyUp);
+    }
+
     render() {
       console.log("Modal:render()");
       // Render nothing if the "show" prop is false
       if(!this.props.show) {
         return null;
       }
-
-
       return (
-        <div className="backdrop" style={backdropStyle}>
+        <div className="backdrop" style={backdropStyle} >
           <div className="modal" style={modalStyle}>
             {this.props.children}
 

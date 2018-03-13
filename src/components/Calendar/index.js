@@ -53,10 +53,7 @@ export default class Calendar extends React.Component {
     }
 
 
-    onListChange = (data) => {
-        this.setMonth(data);
-        this.props.onMonthChange && this.props.onMonthChange();
-    }
+
 
     setMonth = (month) => {
         var monthNo = this.months.indexOf(month);
@@ -67,13 +64,6 @@ export default class Calendar extends React.Component {
         })
     }
 
-    setYear = (year) => {
-        var dateContext = Object.assign({}, this.state.dateContext);
-        dateContext = moment(dateContext).set('year', year);
-        this.setState({
-            dateContext: dateContext
-        })
-    }
 
     nextMonth = () => {
         var dateContext = Object.assign({}, this.state.dateContext);
@@ -98,39 +88,18 @@ export default class Calendar extends React.Component {
         this.props.onDayClick && this.props.onDayClick(e, day);
     }
 
-    changeMonth = (e, month) => {
-        var mouse = getPosition(e.target);
-        console.log("monthMouse: ", mouse);
-        this.setState({
-            showMonthPopup: !this.state.showMonthPopup,
-            mouse: mouse
-        });
-    }
-
-    showYearEditor = () => {
-        this.setState({
-            showYearEditor: true
-        }, () => {
-        });
-    }
-
-    onKeyUpYear = (e) => {
-        if (e.which === 13 || e.which === 27) {  // enter or  esc key
-            this.setYear(e.target.value);
-            this.setState({
-                showYearEditor: false
-            });
-        }
-    }
-
-    onYearChange = (e) => {
-        this.setYear(e.target.value);
-        this.props.onYearChange && this.props.onYearChange(e, e.target.value);
+    onListChange = (data) => {
+        this.setMonth(data);
+        this.props.onMonthChange && this.props.onMonthChange();
     }
 
     onSelectChange = (e, data) => {
-        this.onListChange(data);
+        //this.onListChange(data);
+        this.setMonth(data);
+        this.props.onMonthChange && this.props.onMonthChange();
     }
+
+
 
     SelectList = (props) => {
         var popup = props.data.map((data) => {
@@ -153,6 +122,15 @@ export default class Calendar extends React.Component {
         );
     }
 
+    changeMonth = (e, month) => {
+        var mouse = getPosition(e.target);
+        console.log("monthMouse: ", mouse);
+        this.setState({
+            showMonthPopup: !this.state.showMonthPopup,
+            mouse: mouse
+        });
+    }
+
     MonthNav = () => {
         return (
             <span className="label-month"
@@ -164,6 +142,36 @@ export default class Calendar extends React.Component {
                 }
             </span>
         );
+    }
+
+    showYearEditor = () => {
+        this.setState({
+            showYearEditor: true
+        }, () => {
+        });
+    }
+
+    setYear = (year) => {
+        var dateContext = Object.assign({}, this.state.dateContext);
+        dateContext = moment(dateContext).set('year', year);
+        this.setState({
+            dateContext: dateContext
+        })
+    }
+
+
+    onKeyUpYear = (e) => {
+        if (e.which === 13 || e.which === 27) {  // enter or  esc key
+            this.setYear(e.target.value);
+            this.setState({
+                showYearEditor: false
+            });
+        }
+    }
+
+    onYearChange = (e) => {
+        this.setYear(e.target.value);
+        this.props.onYearChange && this.props.onYearChange(e, e.target.value);
     }
 
     YearNav = () => {

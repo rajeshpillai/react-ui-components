@@ -23,7 +23,7 @@ var store = createStore(counter);
 console.log("store: ", store);
 
 function render() {
-  ReactDOM.render(<AppWithCalendar />, document.getElementById('root'));
+  ReactDOM.render(<App />, document.getElementById('root'));
   // ReactDOM.render(<App store = {store} />, document.getElementById('root'));
 }
 
