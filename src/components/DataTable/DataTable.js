@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './datatable.css';
 
-export default  class Excel extends React.Component {
+export default  class DataTable extends React.Component {
     constructor(props) {
         super(props);
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom"
-import Excel from './components/Excel/Excel';
+import DataTable from './components/DataTable/DataTable';
 import If from './components/Core/If';
 import InputTag from './components/InputTag';
 import Calendar from './components/Calendar';
@@ -103,7 +103,7 @@ export default class App extends React.Component {
          </If>
         */}
           <h3>Excel online</h3>
-          <Excel model={this.state} />
+          <DataTable model={this.state} />
         </div>
       );
   }
