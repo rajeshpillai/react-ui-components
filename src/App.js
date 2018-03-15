@@ -19,10 +19,10 @@ export default class App extends React.Component {
     console.log("ctor: ", props);
     this.state = {
       headers: [
-        {title:"name",index: 0},
-        {title:"age",index: 1},
-        {title:"qualification",index:2},
-        {title:"rating",index:3}
+        {title:"Name",accessor: "name", index: 0},
+        {title:"Age",accessor: "age",index: 1},
+        {title:"Qualification",accessor: "qualification",index:2},
+        {title:"Rating",accessor: "rating",index:3}
       ],
       data: [
           {name:"a", age:29, qualification:"B.Com",rating:3},

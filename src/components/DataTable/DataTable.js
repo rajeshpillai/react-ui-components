@@ -61,7 +61,7 @@ export default  class DataTable extends React.Component {
 
         // Update the data
         //data[this.state.edit.row][this.state.edit.cell] = input.value;
-        data[this.state.edit.row][header.title]= input.value;
+        data[this.state.edit.row][header.accessor]= input.value;
 
         // Update state
         this.logSetState({
@@ -246,7 +246,7 @@ export default  class DataTable extends React.Component {
                     // Loop through headers 
                     headers.map((header, index) => {
                     // Get the content for the header.  This will work with col reordering.
-                    let content = row[header.title];
+                    let content = row[header.accessor];
                     if (edit && edit.row === rowIdx && edit.cell===index) {
                         content = <form onSubmit={this.save}>
                             <input type="text" defaultValue={content} />
