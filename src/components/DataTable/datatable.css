@@ -18,3 +18,7 @@
 .data-table td {
   padding: 5px;
 }
+.col-resizer {
+  display: inline-block;
+  width: 20px;
+}

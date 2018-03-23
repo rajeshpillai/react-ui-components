@@ -5,11 +5,12 @@ import './datatable.css';
 export default  class DataTable extends React.Component {
     constructor(props) {
         super(props);
+        this.noData = props.noData || "No Records found!!"
     }
 
     state = {
-        headers: this.props.model.headers,
-        data: this.props.model.data,
+        headers: this.props.headers,
+        data: this.props.data,
         sortby: null,
         descending: false,
         edit: null, // {row: index, cell: index}
@@ -220,11 +221,13 @@ export default  class DataTable extends React.Component {
         var headerView = headers.map((header, index) => {
             let title = header.title;
             let cleanTitle = header.title;
+            let width = header.width;
             if (this.state.sortby === index) {
                 title += this.state.descending ? '\u2191': '\u2193'
             }
             return (
                 <th key={index} 
+                    style={{width: width}}
                     data-col={cleanTitle}
                     onDragStart={(e)=>this.onDragStart(e, index)}
                     onDrag={(e)=>this.onDrag(e, index)}
@@ -234,6 +237,8 @@ export default  class DataTable extends React.Component {
                         data-col={cleanTitle}
                         draggable className="header-cell">
                         {title}
+                    </span>
+                    <span className="col-resizer">
                     </span>
                 </th>
             )
@@ -247,13 +252,30 @@ export default  class DataTable extends React.Component {
                     headers.map((header, index) => {
                     // Get the content for the header.  This will work with col reordering.
                     let content = row[header.accessor];
+                    let cell = header.cell; // row[header.colRenderer];
+                    if (cell) {
+                        console.log(typeof(cell));
+                        if (typeof(cell) === "object") {
+                            if (cell.type === "image" && content) {
+                                content = <img style={cell.style} src={content} />
+                            }
+                        } else if (typeof(cell) === "function") {
+                            content = cell(content);
+                        }
+                    }
                     if (edit && edit.row === rowIdx && edit.cell===index) {
                         content = <form onSubmit={this.save}>
                             <input type="text" defaultValue={content} />
                         </form>
                     }
                     return (<td key={index} 
-                        data-row={rowIdx}>{content}</td>
+                        data-row={rowIdx}>
+                        {
+                            content
+                            /* {type==="text" ? content: 
+                            <img style={{"width":"50px"}} src={content} />
+                        } */}
+                    </td>
                     );
                 })}
             </tr>);
@@ -268,7 +290,8 @@ export default  class DataTable extends React.Component {
                 </thead>
                 <tbody onDoubleClick={this.showEditor}>
                     {this.renderSearch()}
-                    {contentView}
+                    {!this.state.data.length && this.noData}
+                    {this.state.data && contentView}
                 </tbody>
             </table>
         );

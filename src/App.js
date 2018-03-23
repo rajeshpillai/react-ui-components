@@ -19,15 +19,28 @@ export default class App extends React.Component {
     console.log("ctor: ", props);
     this.state = {
       headers: [
-        {title:"Name",accessor: "name", index: 0},
+        {title:"Name",accessor: "name", width: 300, index: 0},
         {title:"Age",accessor: "age",index: 1},
         {title:"Qualification",accessor: "qualification",index:2},
-        {title:"Rating",accessor: "rating",index:3}
+        {title:"Rating",accessor: "rating",index:3, cell: row => (
+          <div style={{
+              backgroundColor: "yellow",
+              width: row * 10 + "px"
+          }}>
+            {row}
+          </div>
+        )},
+        {title:"Profile",accessor:"profile", width: 200, index:4,cell:{
+          type: "image",
+          style: {
+            "width": "50px",
+          }
+        }}
       ],
       data: [
-          {name:"a", age:29, qualification:"B.Com",rating:3},
-          {name:"b", age:35, qualification:"B.Sc",rating:2},
-          {name:"c", age:42, qualification:"B.E",rating:3},
+          {name:"a", age:29, qualification:"B.Com",rating:3,profile: "./img/img1.jpg"},
+          {name:"b", age:35, qualification:"B.Sc",rating:2,profile:"./img/img2.jpg"},
+          {name:"c", age:42, qualification:"B.E",rating:3,profile:"./img/img3.jpeg"},
         ]
     }
 
@@ -103,7 +116,7 @@ export default class App extends React.Component {
          </If>
         */}
           <h3>Excel online</h3>
-          <DataTable model={this.state} />
+          <DataTable headers={this.state.headers} data={this.state.data} noData="No records!" />
         </div>
       );
   }
